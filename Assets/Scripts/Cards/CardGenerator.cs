@@ -7,14 +7,7 @@ namespace GBE
     {
         [SerializeField] private List<CardBase> m_cardPool;
 
-        public CardPool pool;
-
         public List<CardBase> card;
-
-        private void Start()
-        {
-            SetupPool(pool);
-        }
 
         private void Update()
         {
