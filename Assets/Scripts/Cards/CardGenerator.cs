@@ -41,7 +41,7 @@ namespace GBE
 
             for (int i = 0; i < t_amount; i++)
             {
-                CardBase t_card = t_cardPool[Random.Range(0, m_cardPool.Count)];
+                CardBase t_card = m_cardPool[Random.Range(0, m_cardPool.Count)];
                 t_cards.Add(t_card);
             }
 
