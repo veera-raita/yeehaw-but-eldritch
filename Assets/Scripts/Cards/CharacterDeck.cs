@@ -11,7 +11,6 @@ namespace GBE
         public CardGenerator m_generator;
 
         public List<CardBase> deck = new();
-
         public List<CardBase> hand = new();
 
         private void Start()
