@@ -7,6 +7,15 @@ namespace GBE
     [CreateAssetMenu(menuName = "Cards/Card", fileName = "New Card")]
     public class CardStandard : CardBase
     {
+<<<<<<< HEAD
         
+=======
+
+
+        public override CardBase GetDuplicate()
+        {
+            return Instantiate(this);
+        }
+>>>>>>> Sydney
     }
 }
