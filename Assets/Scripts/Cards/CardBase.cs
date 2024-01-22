@@ -1,10 +1,7 @@
 using UnityEngine;
-<<<<<<< HEAD
-=======
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
->>>>>>> Sydney
 
 namespace GBE
 {
@@ -18,16 +15,12 @@ namespace GBE
             Support
         }
 
-<<<<<<< HEAD
         public string cardName;
         public CardType cardType;
         [TextArea(3, 6)] public string cardDescription;
-=======
         [SerializeField] private string id;
         public string ID { get { return id; } }
         public string CardName;
-        public CardType cardType;
-        [TextArea(3, 6)] public string cardDescription;
 
         #if UNITY_EDITOR
         protected virtual void OnValidate()
@@ -41,6 +34,5 @@ namespace GBE
         {
             return this;
         }
->>>>>>> Sydney
     }
 }

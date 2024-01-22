@@ -5,11 +5,8 @@ namespace GBE
 {
     public class CardGenerator : MonoBehaviour
     {
-<<<<<<< HEAD
         public CardPool m_CardPool;
-=======
         [SerializeField] private List<CardBase> m_cardPool;
->>>>>>> Sydney
 
         public List<CardBase> card;
 
@@ -17,22 +14,7 @@ namespace GBE
         {
             if (Input.GetKeyUp(KeyCode.Space))
             {
-<<<<<<< HEAD
                 GetRandom(3);
-            }
-        }
-
-
-        public void GetRandom(int t_amount)
-        {
-            for (int i = 0; i < t_amount; i++)
-            {
-                CardBase t_cardBase = m_CardPool.cards[Random.Range(0, m_CardPool.cards.Count)];
-                card.Add(t_cardBase);
-            }
-        }
-=======
-                card = GetRandom(3);
             }
         }
 
@@ -84,6 +66,5 @@ namespace GBE
 
             return t_list;
         }
->>>>>>> Sydney
     }
 }
