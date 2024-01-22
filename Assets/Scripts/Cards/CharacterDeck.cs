@@ -12,6 +12,9 @@ namespace GBE
 
         public List<CardBase> deck = new();
         public List<CardBase> hand = new();
+        public List<CardBase> discard = new();
+
+        public CardBase selectedCard;
 
         private void Start()
         {
@@ -21,9 +24,15 @@ namespace GBE
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.P))
+                DrawFromDeck(3);
+
+            if (hand.Count > 0)
+                selectedCard = hand[0];
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                DeckToHand(4);
+                PlayCard(selectedCard);
             }
         }      
 
@@ -36,19 +45,26 @@ namespace GBE
             }
         }
 
-        public void DeckToHand(int t_amount)
+        public void DrawFromDeck(int t_amountToDraw)
         {
-            if (t_amount >= deck.Count)
+            for (int i = 0; i < t_amountToDraw; i++)
             {
-                t_amount = deck.Count;
+                hand.Add(deck[0]);
+                deck.Remove(deck[0]);
             }
+        }
 
-            for (int i = 0; i < t_amount; i++)
-            {
-                CardBase t_instance = deck[Random.Range(0, deck.Count)];
-                hand.Add(t_instance);
-                deck.Remove(t_instance);
-            }
+        public void PlayCard(CardBase t_instance)
+        {
+            selectedCard = null;
+
+            hand.Remove(t_instance);
+            DiscardCard(t_instance);
+        }
+
+        public void DiscardCard(CardBase t_instance)
+        {
+            discard.Add(t_instance);
         }
     }
 }
