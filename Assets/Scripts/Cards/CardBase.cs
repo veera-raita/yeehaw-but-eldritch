@@ -25,5 +25,10 @@ namespace GBE
         {
             return this;
         }
+
+        public virtual void Destroy()
+        {
+
+        }
     }
 }

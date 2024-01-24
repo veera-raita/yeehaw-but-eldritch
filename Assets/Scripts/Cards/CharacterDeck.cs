@@ -9,8 +9,6 @@ namespace GBE
     {
         [SerializeField] private Hand cardsHand;
 
-
-
         public CardPool pool;
 
         public CardGenerator m_generator;
@@ -26,6 +24,7 @@ namespace GBE
 
         private void Awake()
         {
+            cardsHand.OnRightClickEvent += PlayCard;
             cardsHand.OnPointerEnterEvent += SelectCard;
             cardsHand.OnPointerExitEvent += DeselectCard;
         }
@@ -41,8 +40,8 @@ namespace GBE
             deckText.text = deck.Count.ToString();
             discardText.text = discard.Count.ToString();
 
-            //if (Input.GetKeyDown(KeyCode.P))
-                //DrawFromDeck(5);
+            if (Input.GetKeyDown(KeyCode.P))
+                DrawFromDeck(5);
 
         }
 
@@ -53,6 +52,40 @@ namespace GBE
             {
                 deck.Add(t_instance.GetDuplicate());
             }
+        }
+
+        private void DrawFromDeck(int t_amountToDraw)
+        {
+            int t_cardsDrawn = 0;
+
+            while (t_cardsDrawn < t_amountToDraw && hand.Count <= 5)
+            {
+                hand.Add(deck[0]);
+                DisplayCard(deck[0]);
+                deck.RemoveAt(0);
+                t_cardsDrawn++;
+            }
+        }
+
+        public void DisplayCard(CardBase t_card)
+        {
+            CardSlot t_slot = cardsHand.slots[hand.Count - 1];
+            t_slot.Card = t_card;
+            t_slot.gameObject.SetActive(true);
+        }
+
+
+        private void PlayCard(BaseCardSlot t_cardSlot)
+        {
+            selectedCard = null;
+            t_cardSlot.gameObject.SetActive(false);
+            hand.Remove(t_cardSlot.Card);
+            Discard(t_cardSlot.Card);
+        }
+
+        private void Discard(CardBase t_card)
+        {
+            discard.Add(t_card);
         }
 
         private void SelectCard(BaseCardSlot t_cardSlot)

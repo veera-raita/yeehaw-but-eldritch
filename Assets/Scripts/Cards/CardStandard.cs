@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GBE
@@ -10,6 +8,11 @@ namespace GBE
         public override CardBase GetDuplicate()
         {
             return Instantiate(this);
+        }
+
+        public override void Destroy()
+        {
+            Destroy(this);
         }
     }
 }
