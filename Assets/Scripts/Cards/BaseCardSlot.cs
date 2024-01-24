@@ -12,6 +12,8 @@ namespace GBE
 
         protected bool isPointerOver;
 
+		public CardBase Card;
+
 		public void OnPointerClick(PointerEventData t_eventData)
 		{
 			if (t_eventData != null && t_eventData.button == PointerEventData.InputButton.Left)

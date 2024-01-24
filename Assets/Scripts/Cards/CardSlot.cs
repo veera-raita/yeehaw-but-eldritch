@@ -6,6 +6,6 @@ namespace GBE
 {
     public class CardSlot : BaseCardSlot
     {
-        
+
     }
 }
