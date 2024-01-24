@@ -7,20 +7,11 @@ namespace GBE
 {
     public class CardBase : ScriptableObject
     {
-        public enum CardType
-        {
-            Attack,
-            Defense,
-            Disruption,
-            Support
-        }
-
-        public string cardName;
-        public CardType cardType;
-        [TextArea(3, 6)] public string cardDescription;
         [SerializeField] private string id;
         public string ID { get { return id; } }
-        public string CardName;
+
+        public string cardName;
+        public Sprite cardIcon;
 
         #if UNITY_EDITOR
         protected virtual void OnValidate()

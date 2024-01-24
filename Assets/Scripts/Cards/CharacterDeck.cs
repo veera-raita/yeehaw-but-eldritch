@@ -1,20 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace GBE
 {
     public class CharacterDeck : MonoBehaviour
     {
+        [SerializeField] private Hand cardsHand;
+
+
+
         public CardPool pool;
 
         public CardGenerator m_generator;
+
+        public TextMeshProUGUI deckText;
+        public TextMeshProUGUI discardText;
 
         public List<CardBase> deck = new();
         public List<CardBase> hand = new();
         public List<CardBase> discard = new();
 
-        public CardBase selectedCard;
+        public BaseCardSlot selectedCard;
+
+        private void Awake()
+        {
+            cardsHand.OnPointerEnterEvent += SelectCard;
+            cardsHand.OnPointerExitEvent += DeselectCard;
+        }
 
         private void Start()
         {
@@ -24,17 +38,13 @@ namespace GBE
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.P))
-                DrawFromDeck(3);
+            deckText.text = deck.Count.ToString();
+            discardText.text = discard.Count.ToString();
 
-            if (hand.Count > 0)
-                selectedCard = hand[0];
+            //if (Input.GetKeyDown(KeyCode.P))
+                //DrawFromDeck(5);
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                PlayCard(selectedCard);
-            }
-        }      
+        }
 
         public void SetStartCards()
         {
@@ -45,26 +55,14 @@ namespace GBE
             }
         }
 
-        public void DrawFromDeck(int t_amountToDraw)
+        private void SelectCard(BaseCardSlot t_cardSlot)
         {
-            for (int i = 0; i < t_amountToDraw; i++)
-            {
-                hand.Add(deck[0]);
-                deck.Remove(deck[0]);
-            }
+            selectedCard = t_cardSlot;
         }
 
-        public void PlayCard(CardBase t_instance)
+        private void DeselectCard(BaseCardSlot t_cardSlot)
         {
             selectedCard = null;
-
-            hand.Remove(t_instance);
-            DiscardCard(t_instance);
-        }
-
-        public void DiscardCard(CardBase t_instance)
-        {
-            discard.Add(t_instance);
         }
     }
 }
