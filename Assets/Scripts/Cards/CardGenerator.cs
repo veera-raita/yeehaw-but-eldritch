@@ -6,9 +6,9 @@ namespace GBE
     public class CardGenerator : MonoBehaviour
     {
         public CardPool m_CardPool;
-        [SerializeField] private List<CardBase> m_cardPool;
+        [SerializeField] private List<Card> m_cardPool;
 
-        public List<CardBase> card;
+        public List<Card> card;
 
         private void Update()
         {
@@ -24,42 +24,42 @@ namespace GBE
 
         }
 
-        public List<CardBase> GetRandom(int t_amount)
+        public List<Card> GetRandom(int t_amount)
         {
             return GetRandomFromPool(t_amount, m_cardPool);
         }
 
-        public List<CardBase> GetRandomFromPool(int t_amount, List<CardBase> t_cardPool)
+        public List<Card> GetRandomFromPool(int t_amount, List<Card> t_cardPool)
         {
-            List<CardBase> t_cards = new();
+            List<Card> t_cards = new();
 
             for (int i = 0; i < t_amount; i++)
             {
-                CardBase t_card = m_cardPool[Random.Range(0, m_cardPool.Count)];
+                Card t_card = m_cardPool[Random.Range(0, m_cardPool.Count)];
                 t_cards.Add(t_card);
             }
 
             return t_cards;
         }
 
-        public void AddToPool(List<CardBase> t_cardPool)
+        public void AddToPool(List<Card> t_cardPool)
         {
             m_cardPool.AddRange(GetFullPool(t_cardPool));
         }
 
-        public void RemoveFromPool(CardBase t_target)
+        public void RemoveFromPool(Card t_target)
         {
-            CardBase t_card = m_cardPool.Find(t_instance => t_instance == t_target);
+            Card t_card = m_cardPool.Find(t_instance => t_instance == t_target);
             if (t_card != null)
             {
                 m_cardPool.Remove(t_card);
             }
         }
 
-        private List<CardBase> GetFullPool(List<CardBase> t_cardPool)
+        private List<Card> GetFullPool(List<Card> t_cardPool)
         {
-            List<CardBase> t_list = new();
-            foreach (CardBase t_card in t_cardPool)
+            List<Card> t_list = new();
+            foreach (Card t_card in t_cardPool)
             {
                 t_list.Add(t_card);
             }

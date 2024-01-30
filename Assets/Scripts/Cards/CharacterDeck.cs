@@ -16,9 +16,9 @@ namespace GBE
         public TextMeshProUGUI deckText;
         public TextMeshProUGUI discardText;
 
-        public List<CardBase> deck = new();
-        public List<CardBase> hand = new();
-        public List<CardBase> discard = new();
+        public List<Card> deck = new();
+        public List<Card> hand = new();
+        public List<Card> discard = new();
 
         public BaseCardSlot selectedCard;
 
@@ -47,8 +47,8 @@ namespace GBE
 
         public void SetStartCards()
         {
-            List<CardBase> t_list = m_generator.GetRandom(10);
-            foreach (CardBase t_instance in t_list)
+            List<Card> t_list = m_generator.GetRandom(10);
+            foreach (Card t_instance in t_list)
             {
                 deck.Add(t_instance.GetDuplicate());
             }
@@ -67,7 +67,7 @@ namespace GBE
             }
         }
 
-        public void DisplayCard(CardBase t_card)
+        public void DisplayCard(Card t_card)
         {
             CardSlot t_slot = cardsHand.slots[hand.Count - 1];
             t_slot.Card = t_card;
@@ -83,7 +83,7 @@ namespace GBE
             Discard(t_cardSlot.Card);
         }
 
-        private void Discard(CardBase t_card)
+        private void Discard(Card t_card)
         {
             discard.Add(t_card);
         }

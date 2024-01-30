@@ -12,7 +12,7 @@ namespace GBE
 
         protected bool isPointerOver;
 
-		public CardBase Card;
+		public Card Card;
 
 		public void OnPointerClick(PointerEventData t_eventData)
 		{

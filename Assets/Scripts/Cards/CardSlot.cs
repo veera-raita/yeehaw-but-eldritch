@@ -6,7 +6,7 @@ namespace GBE
 {
     public class CardSlot : BaseCardSlot
     {
-        public void LoadCard(CardBase t_card)
+        public void LoadCard(Card t_card)
         {
             Card = t_card;
         }

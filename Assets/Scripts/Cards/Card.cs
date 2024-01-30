@@ -5,7 +5,8 @@ using UnityEditor;
 
 namespace GBE
 {
-    public class CardBase : ScriptableObject
+    [CreateAssetMenu(menuName = "Card System/Card", fileName = "New Card")]
+    public class Card : ScriptableObject
     {
         [SerializeField] private string id;
         public string ID { get { return id; } }
@@ -21,14 +22,9 @@ namespace GBE
         }
         #endif
 
-        public virtual CardBase GetDuplicate()
+        public virtual Card GetDuplicate()
         {
-            return this;
-        }
-
-        public virtual void Destroy()
-        {
-
+            return Instantiate(this);
         }
     }
 }
