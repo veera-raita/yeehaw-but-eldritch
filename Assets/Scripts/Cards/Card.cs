@@ -8,6 +8,8 @@ namespace GBE
     [CreateAssetMenu(menuName = "Card System/Card", fileName = "New Card")]
     public class Card : ScriptableObject
     {
+        public CardAction action;
+
         [SerializeField] private string id;
         public string ID { get { return id; } }
 
