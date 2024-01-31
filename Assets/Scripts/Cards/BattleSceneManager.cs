@@ -20,12 +20,12 @@ namespace GBE
         public TextMeshProUGUI roundMsg;
 
         [Space, Header("Player")]
-        public GameObject player;
+        public Battler player;
         public Transform playerStation;
         public int actions = 6;
 
         [Space, Header("Enemies")]
-        public GameObject enemy;
+        public Battler enemy;
         public List<Battler> enemies = new();
         public GameObject[] possibleEnemies;
         public Transform enemyStation;
@@ -40,15 +40,17 @@ namespace GBE
 
         public void BeginBattle(GameObject[] t_prefabs)
         {
-            roundMsg.text = "Your Turn";
-
             m_state = BattleState.PlayerTurn;
-            ChangeTurn();
+            ChangeTurn(player);
         }
 
-        public void ChangeTurn()
+        public void ChangeTurn(Battler t_battler)
         {
+            if (m_state == BattleState.PlayerTurn)
+                roundMsg.text = "Your Turn";
 
+            if (m_state == BattleState.EnemyTurn)
+                roundMsg.text = "Enemy Turn";
         }
     }
 }
