@@ -15,3 +15,5 @@ MonoBehaviour:
   cards:
   - {fileID: 11400000, guid: c7ff4098cfa18a94cb9fc7b195b5dbcc, type: 2}
   - {fileID: 11400000, guid: 21ae110dbcd16c248a3e673a4738a59d, type: 2}
+  - {fileID: 11400000, guid: b08fc177f045c894ab1c200908a4cf11, type: 2}
+  - {fileID: 11400000, guid: 192d73ffd7260234abb1c1551381b648, type: 2}

@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace GBE
 {
-    [CreateAssetMenu(menuName = "Cards/Card Pool", fileName = "New Card Pool")]
+    [CreateAssetMenu(menuName = "Card System/Card Pool", fileName = "New Card Pool")]
     public class CardPool : ScriptableObject
     {
-        public List<CardBase> cards;
+        public List<Card> cards;
     }
 }
