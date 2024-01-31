@@ -18,7 +18,12 @@ namespace GBE
 
         public void SetTarget()
         {
+            FindObjectOfType<CardController>().target = this;
+        }
 
+        public void None()
+        {
+            FindObjectOfType<CardController>().target = null;
         }
     }
 }
