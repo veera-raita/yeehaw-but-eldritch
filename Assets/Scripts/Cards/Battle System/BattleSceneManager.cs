@@ -26,7 +26,6 @@ namespace GBE
 
         [Space, Header("Enemies")]
         public Battler enemy;
-        public List<Battler> enemies = new();
         public GameObject[] possibleEnemies;
         public Transform enemyStation;
 
@@ -59,7 +58,7 @@ namespace GBE
         private void Start()
         {
             m_state = BattleState.Start;
-            //BeginBattle(possibleEnemies);
+            BeginBattle(enemy);
         }
 
         private void Update()
@@ -72,8 +71,11 @@ namespace GBE
 
         }
 
-        public void BeginBattle(GameObject[] t_prefabs)
+        public void BeginBattle(Battler t_prefabs)
         {
+            Instantiate(t_prefabs, new Vector3(enemyStation.position.x, enemyStation.position.y + 3.125f, 
+                enemyStation.position.z), enemyStation.rotation);
+
             m_state = BattleState.PlayerTurn;
             ChangeTurn(player);
         }

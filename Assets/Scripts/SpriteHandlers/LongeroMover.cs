@@ -18,7 +18,7 @@ public class LongeroMover : MonoBehaviour
     {
         if (FloorCheck)
         {
-            RB.AddForce(transform.up * Random.Range(1.0f, 15.0f);
+            //RB.AddForce(transform.up * Random.Range(1.0f, 15.0f);
         }
     }
     private void OnCollisionEnter(Collision collision)
