@@ -8,7 +8,7 @@ namespace GBE
 {
     public class CardSlot : MonoBehaviour
     {
-        public CardController controller;
+        public BattleSceneManager controller;
 
         public Card m_card;
 

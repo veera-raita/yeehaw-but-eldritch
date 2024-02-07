@@ -16,14 +16,17 @@ namespace GBE
             m_battleSceneManager = FindObjectOfType<BattleSceneManager>();
         }
 
-        public void SetTarget()
+        public void PointerEnterHandler()
         {
-            FindObjectOfType<CardController>().target = this;
+            if (m_battleSceneManager.selectedCard != null)
+            {
+                m_battleSceneManager.target = this;
+            }
         }
 
-        public void None()
+        public void PointerExitHandler()
         {
-            FindObjectOfType<CardController>().target = null;
+            m_battleSceneManager.target = null;
         }
     }
 }
