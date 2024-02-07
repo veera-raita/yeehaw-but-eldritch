@@ -6,26 +6,27 @@ public class LongeroMover : MonoBehaviour
 {
     private bool FloorCheck;
     private Rigidbody RB;
+    private SpriteRenderer Spr;
     // Start is called before the first frame update
     void Start()
     {
-        FloorCheck = false;
+        FloorCheck = true;
         RB = GetComponent<Rigidbody>();
+        Spr = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (FloorCheck)
-        {
-            RB.AddForce(transform.up * Random.Range(1.0f, 15.0f);
-        }
+        Spr.transform.Rotate(0, 0, 135f * Time.deltaTime);
     }
-    private void OnCollisionEnter(Collision collision)
+
+    void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("floor"))
         {
-            FloorCheck = true;
+            Debug.Log("meow");
+            RB.AddForce(Random.Range(-0.5f, -1.5f), Random.Range(1.5f, 3.0f), 0, ForceMode.Impulse);
         }
     }
 }
