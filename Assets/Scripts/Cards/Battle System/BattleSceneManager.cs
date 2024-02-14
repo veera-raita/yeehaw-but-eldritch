@@ -19,121 +19,116 @@ namespace GBE
         public TextMeshProUGUI roundCount;
         public TextMeshProUGUI roundMsg;
 
+        public int roundCounter = 1;
+
         [Space, Header("Player")]
         public Battler player;
         public Transform playerStation;
         public int actions = 6;
 
         [Space, Header("Enemies")]
-        public Battler enemy;
+        public Enemy enemy;
         public GameObject[] possibleEnemies;
         public Transform enemyStation;
 
+        public Battler playerInstance;
+        public Enemy enemyInstance;
 
-
-        public TextMeshProUGUI deckText;
-        public TextMeshProUGUI discardText;
-
-        public List<Card> deck = new();
-        public List<Card> hand = new();
-        public List<Card> discard = new();
-
-        public CardSlot selectedCard;
-
-        public List<CardSlot> slots;
-        [SerializeField] protected Transform m_cardHolder;
-
-
+        public bool endTurn = false;
 
         public Battler target;
-
         public BattleState m_state;
 
-        protected void OnValidate()
-        {
-            if (m_cardHolder != null)
-                m_cardHolder.GetComponentsInChildren(includeInactive: true, result: slots);
-        }
+        public CardHandler m_cardHandler;
 
         private void Start()
         {
+            m_cardHandler = GetComponent<CardHandler>();
+
             m_state = BattleState.Start;
-            BeginBattle(enemy);
+            BeginBattle();
         }
 
         private void Update()
         {
-            deckText.text = deck.Count.ToString();
-            discardText.text = discard.Count.ToString();
-
-            if (Input.GetKeyDown(KeyCode.P))
-                DrawFromDeck(5);
-
+            roundCount.text = roundCounter.ToString();
         }
 
-        public void BeginBattle(Battler t_prefabs)
+        public void BeginBattle()
         {
-            Instantiate(t_prefabs, new Vector3(enemyStation.position.x, enemyStation.position.y + 3.125f, 
-                enemyStation.position.z), enemyStation.rotation);
+            playerInstance = Instantiate(player, playerStation.position, playerStation.rotation);
+
+            enemyInstance = Instantiate(enemy, enemyStation.position, enemyStation.rotation);
 
             m_state = BattleState.PlayerTurn;
-            ChangeTurn(player);
+            StartCoroutine(PlayerTurn());
         }
 
-        public void ChangeTurn(Battler t_battler)
+        public void EndTurn()
         {
-            if (m_state == BattleState.PlayerTurn)
-                roundMsg.text = "Your Turn";
-
-            if (m_state == BattleState.EnemyTurn)
-                roundMsg.text = "Enemy Turn";
+            endTurn = true;
         }
 
-
-
-
-        /*
-
-        **********************************************************************
-                         DECK INVESTIGATION DO NOT CROSS
-        **********************************************************************
-
-        */
-
-        private void DrawFromDeck(int t_amountToDraw)
+        private IEnumerator PlayerTurn()
         {
-            int t_cardsDrawn = 0;
+            endTurn = false;
+            roundMsg.text = "Player Turn";
 
-            while (t_cardsDrawn < t_amountToDraw && hand.Count <= 5)
+            yield return new WaitForSeconds(1f);
+
+            m_cardHandler.DrawFromDeck(1);
+
+            yield return new WaitUntil(() => m_cardHandler.hand.Count == 0 || endTurn || enemyInstance == null);
+            yield return new WaitForSeconds(1f);
+
+            if (enemyInstance == null)
             {
-                hand.Add(deck[0]);
-                DisplayCard(deck[0]);
-                deck.RemoveAt(0);
-                t_cardsDrawn++;
+                m_state = BattleState.Won;
+                EndBattle();
+            }
+            else
+            {
+                m_state = BattleState.EnemyTurn;
+                StartCoroutine(EnemyTurn());
             }
         }
 
-        public void DisplayCard(Card t_card)
+        private IEnumerator EnemyTurn()
         {
-            CardSlot t_slot = slots[hand.Count - 1];
-            t_slot.m_card = t_card;
-            t_slot.gameObject.SetActive(true);
+            endTurn = false;
+            roundMsg.text = "Enemy Turn";
+
+            yield return new WaitForSeconds(1f);
+
+            enemyInstance.TakeTurn();
+
+            yield return new WaitForSeconds(2f);
+
+            roundCounter++;
+
+            if (playerInstance == null)
+            {
+                m_state = BattleState.Lost;
+                EndBattle();
+            }
+            else
+            {
+                m_state = BattleState.PlayerTurn;
+                StartCoroutine(PlayerTurn());
+            }
         }
 
-        public void PlayCard(CardSlot t_cardSlot)
+        private void EndBattle()
         {
-            selectedCard = null;
-            t_cardSlot.gameObject.SetActive(false);
+            if (m_state == BattleState.Won)
+            {
+                roundMsg.text = "Yippee!!";
+            }
 
-            t_cardSlot.m_card.action.PerformAction(target);
-
-            hand.Remove(t_cardSlot.m_card);
-            Discard(t_cardSlot.m_card);
-        }
-
-        private void Discard(Card t_card)
-        {
-            discard.Add(t_card);
+            if (m_state == BattleState.Lost)
+            {
+                roundMsg.text = "Fuck you";
+            }
         }
     }
 }

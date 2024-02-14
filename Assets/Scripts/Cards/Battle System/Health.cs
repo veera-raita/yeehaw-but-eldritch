@@ -38,7 +38,7 @@ namespace GBE
 
         public void HandleDeath()
         {
-
+            Destroy(gameObject);
         }
     }
 }

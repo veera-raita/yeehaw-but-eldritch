@@ -24,17 +24,17 @@ namespace GBE
 
         public void SelectCard()
         {
-            controller.selectedCard = this;
+            controller.m_cardHandler.selectedCard = this;
         }
 
         public void DeselectCard()
         {
-            controller.selectedCard = null;
+            controller.m_cardHandler.selectedCard = null;
         }
 
         public void HandleEndDrag()
         {
-            controller.PlayCard(this);
+            controller.m_cardHandler.PlayCard(this);
         }
     }
 }

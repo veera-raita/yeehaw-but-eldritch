@@ -9,7 +9,7 @@ namespace GBE
     {
         public void PerformAction(Battler t_target)
         {
-            t_target.m_Health.TakeDamage(50);
+            t_target.m_Health.TakeDamage(20);
         }
     }
 }
