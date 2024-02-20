@@ -7,7 +7,7 @@ namespace GBE
     public class Battler : MonoBehaviour
     {
         public Health m_Health;
-        private BattleSceneManager m_battleSceneManager;
+        public BattleSceneManager m_battleSceneManager;
 
         private void Start()
         {
@@ -23,9 +23,6 @@ namespace GBE
             }
         }
 
-        public void PointerExitHandler()
-        {
-            m_battleSceneManager.target = null;
-        }
+        public void PointerExitHandler() => m_battleSceneManager.target = null;
     }
 }

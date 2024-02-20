@@ -38,15 +38,14 @@ namespace GBE
             deckText.text = deck.Count.ToString();
             discardText.text = discard.Count.ToString();
 
-            if (Input.GetKeyDown(KeyCode.P))
-                DrawFromDeck(1);
+            //if (Input.GetKeyDown(KeyCode.P)) DrawFromDeck(1);
         }
 
         public void DrawFromDeck(int t_amountToDraw)
         {
             int t_cardsDrawn = 0;
 
-            while (t_cardsDrawn < t_amountToDraw && hand.Count <= 5)
+            while (t_cardsDrawn < t_amountToDraw && hand.Count < 5)
             {
                 hand.Add(deck[0]);
                 DisplayCard(deck[0]);
@@ -67,7 +66,7 @@ namespace GBE
             selectedCard = null;
             t_cardSlot.gameObject.SetActive(false);
 
-            t_cardSlot.m_card.action.PerformAction(m_battleSceneManager.target);
+            t_cardSlot.m_card.Use(m_battleSceneManager.target);
 
             hand.Remove(t_cardSlot.m_card);
             Discard(t_cardSlot.m_card);

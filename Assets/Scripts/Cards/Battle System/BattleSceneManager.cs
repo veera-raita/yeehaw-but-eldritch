@@ -24,17 +24,17 @@ namespace GBE
         [Space, Header("Player")]
         public Battler player;
         public Transform playerStation;
+
+        public Battler playerInstance;
         public int actions = 6;
 
         [Space, Header("Enemies")]
-        public Enemy enemy;
-        public GameObject[] possibleEnemies;
-        public Transform enemyStation;
-
-        public Battler playerInstance;
-        public Enemy enemyInstance;
+        public List<Battler> enemies;
+        public Transform[] enemyStations;
+        public List<Battler> enemyInstances;
 
         public bool endTurn = false;
+
 
         public Battler target;
         public BattleState m_state;
@@ -58,7 +58,11 @@ namespace GBE
         {
             playerInstance = Instantiate(player, playerStation.position, playerStation.rotation);
 
-            enemyInstance = Instantiate(enemy, enemyStation.position, enemyStation.rotation);
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                Battler t_instance = Instantiate(enemies[i], enemyStations[i].position, enemyStations[i].rotation);
+                enemyInstances.Add(t_instance);
+            }
 
             m_state = BattleState.PlayerTurn;
             StartCoroutine(PlayerTurn());
@@ -76,12 +80,12 @@ namespace GBE
 
             yield return new WaitForSeconds(1f);
 
-            m_cardHandler.DrawFromDeck(1);
+            m_cardHandler.DrawFromDeck(5);
 
-            yield return new WaitUntil(() => m_cardHandler.hand.Count == 0 || endTurn || enemyInstance == null);
+            yield return new WaitUntil(() => m_cardHandler.hand.Count == 0 || endTurn || enemyInstances.Count <= 0);
             yield return new WaitForSeconds(1f);
 
-            if (enemyInstance == null)
+            if (enemyInstances.Count <= 0)
             {
                 m_state = BattleState.Won;
                 EndBattle();
@@ -100,11 +104,15 @@ namespace GBE
 
             yield return new WaitForSeconds(1f);
 
-            enemyInstance.TakeTurn();
-
-            yield return new WaitForSeconds(2f);
-
-            roundCounter++;
+            for (int i = 0; i < enemyInstances.Count; i++)
+            {
+                if (playerInstance == null) { break; }
+                else
+                {
+                    enemyInstances[i].GetComponent<Enemy>().TakeTurn();
+                    yield return new WaitForSeconds(2f);
+                }
+            }
 
             if (playerInstance == null)
             {
@@ -113,6 +121,8 @@ namespace GBE
             }
             else
             {
+                roundCounter++;
+
                 m_state = BattleState.PlayerTurn;
                 StartCoroutine(PlayerTurn());
             }
@@ -123,12 +133,18 @@ namespace GBE
             if (m_state == BattleState.Won)
             {
                 roundMsg.text = "Yippee!!";
+                HandleEndScreen();
             }
 
             if (m_state == BattleState.Lost)
             {
                 roundMsg.text = "Fuck you";
             }
+        }
+
+        private void HandleEndScreen()
+        {
+            Debug.Log("end");
         }
     }
 }

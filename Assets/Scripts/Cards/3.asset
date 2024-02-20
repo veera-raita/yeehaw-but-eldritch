@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b31093de40d3ed041a7595b00b78b7d0, type: 3}
   m_Name: 3
   m_EditorClassIdentifier: 
-  action: {fileID: 11400000, guid: a72246468f0fc824a800a7b7d2438748, type: 2}
+  action:
+  - {fileID: 11400000, guid: a72246468f0fc824a800a7b7d2438748, type: 2}
   id: f3e0a3b70ea8a784cb9ed176229c794e
   cardName: 
   cardIcon: {fileID: 0}

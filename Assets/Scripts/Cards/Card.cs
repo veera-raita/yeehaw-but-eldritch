@@ -8,7 +8,7 @@ namespace GBE
     [CreateAssetMenu(menuName = "Card System/Card", fileName = "New Card")]
     public class Card : ScriptableObject
     {
-        public CardAction action;
+        public CardAction[] action;
 
         [SerializeField] private string id;
         public string ID { get { return id; } }
@@ -27,6 +27,14 @@ namespace GBE
         public virtual Card GetDuplicate()
         {
             return Instantiate(this);
+        }
+
+        public void Use(Battler t_target)
+        {
+            foreach (CardAction t_action in action)
+            {
+                t_action.PerformAction(t_target);
+            }
         }
     }
 }

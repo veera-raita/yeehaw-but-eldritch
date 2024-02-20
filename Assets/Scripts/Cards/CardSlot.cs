@@ -9,13 +9,7 @@ namespace GBE
     public class CardSlot : MonoBehaviour
     {
         public BattleSceneManager controller;
-
         public Card m_card;
-
-        private void Awake()
-        {
-            
-        }
 
         public void LoadCard(Card t_card)
         {
@@ -34,7 +28,8 @@ namespace GBE
 
         public void HandleEndDrag()
         {
-            controller.m_cardHandler.PlayCard(this);
+            if (controller.target != null)
+                controller.m_cardHandler.PlayCard(this);
         }
     }
 }
