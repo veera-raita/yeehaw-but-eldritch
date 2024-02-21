@@ -38,7 +38,7 @@ public class Turn : MonoBehaviour
         }
         else if (gameObject.CompareTag("Enemy"))
         {
-            EnemyTurn();
+            FoeTurn();
         }
 
         StartCoroutine(BattleHandler.GetComponent<Timer>().TimeMeme());                     //restart timer, turn on helper
@@ -58,11 +58,11 @@ public class Turn : MonoBehaviour
 
     /*
     *********************************
-          ENEMY TURN GOES HERE
+          Foe TURN GOES HERE
     *********************************
     */
 
-    private void EnemyTurn()
+    private void FoeTurn()
     {
 
     }

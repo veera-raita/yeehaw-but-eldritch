@@ -9,13 +9,15 @@ namespace GBE
     {
         Start,
         PlayerTurn,
-        EnemyTurn,
+        FoeTurn,
         Won,
         Lost
     }
 
     public class BattleSceneManager : MonoBehaviour
     {
+        //
+
         public TextMeshProUGUI roundCount;
         public TextMeshProUGUI roundMsg;
 
@@ -30,11 +32,10 @@ namespace GBE
 
         [Space, Header("Enemies")]
         public List<Battler> enemies;
-        public Transform[] enemyStations;
-        public List<Battler> enemyInstances;
+        public Transform[] FoeStations;
+        public List<Battler> FoeInstances;
 
         public bool endTurn = false;
-
 
         public Battler target;
         public BattleState m_state;
@@ -58,10 +59,11 @@ namespace GBE
         {
             playerInstance = Instantiate(player, playerStation.position, playerStation.rotation);
 
+            //
             for (int i = 0; i < enemies.Count; i++)
             {
-                Battler t_instance = Instantiate(enemies[i], enemyStations[i].position, enemyStations[i].rotation);
-                enemyInstances.Add(t_instance);
+                Battler t_instance = Instantiate(enemies[i], FoeStations[i].position, FoeStations[i].rotation);
+                FoeInstances.Add(t_instance);
             }
 
             m_state = BattleState.PlayerTurn;
@@ -82,34 +84,35 @@ namespace GBE
 
             m_cardHandler.DrawFromDeck(5);
 
-            yield return new WaitUntil(() => m_cardHandler.hand.Count == 0 || endTurn || enemyInstances.Count <= 0);
+            yield return new WaitUntil(() => m_cardHandler.hand.Count == 0 || endTurn || FoeInstances.Count <= 0);
             yield return new WaitForSeconds(1f);
 
-            if (enemyInstances.Count <= 0)
+            if (FoeInstances.Count <= 0)
             {
                 m_state = BattleState.Won;
                 EndBattle();
             }
             else
             {
-                m_state = BattleState.EnemyTurn;
-                StartCoroutine(EnemyTurn());
+                m_state = BattleState.FoeTurn;
+                StartCoroutine(FoeTurn());
             }
         }
 
-        private IEnumerator EnemyTurn()
+        private IEnumerator FoeTurn()
         {
             endTurn = false;
-            roundMsg.text = "Enemy Turn";
+            roundMsg.text = "Foe Turn";
 
             yield return new WaitForSeconds(1f);
 
-            for (int i = 0; i < enemyInstances.Count; i++)
+            //
+            for (int i = 0; i < FoeInstances.Count; i++)
             {
                 if (playerInstance == null) { break; }
                 else
                 {
-                    enemyInstances[i].GetComponent<Enemy>().TakeTurn();
+                    FoeInstances[i].GetComponent<Enemy>().TakeTurn();
                     yield return new WaitForSeconds(2f);
                 }
             }

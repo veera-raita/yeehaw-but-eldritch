@@ -9,6 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5c9c656b359d9f4caa43201beca7d06, type: 3}
-  m_Name: cill
+  m_Script: {fileID: 11500000, guid: ffed5e3725c396144807583434b11013, type: 3}
+  m_Name: Dagger
   m_EditorClassIdentifier: 
+  id: 3783fa65ee81c6f458dc7eacb6bcbb5d
+  cardName: 
+  cardIcon: {fileID: 0}
+  m_actions:
+  - cardType: 0
+    amount: 5

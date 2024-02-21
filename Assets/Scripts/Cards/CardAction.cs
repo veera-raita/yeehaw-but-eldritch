@@ -1,15 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace GBE
 {
-    [CreateAssetMenu(menuName = "Cards/Card Action", fileName = "New Action")]
-    public class CardAction : ScriptableObject
+    [System.Serializable]
+    public class CardAction
     {
-        public void PerformAction(Battler t_target)
+        public enum CardType
         {
-            t_target.m_Health.TakeDamage(20);
+            Attack,
+            Heal,
+            Buff,
+            Debuff
+        }
+
+        public CardType cardType;
+        public int amount;
+
+        public void Attack(Battler t_target)
+        {
+            t_target.m_Health.TakeDamage(amount);
         }
     }
 }

@@ -600,7 +600,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  action: {fileID: 11400000, guid: a72246468f0fc824a800a7b7d2438748, type: 2}
+  manager: {fileID: 0}
+  action: {fileID: 11400000, guid: f51241c7650976f47b9bc3ac333c3fee, type: 2}
 --- !u!114 &5327320473908860098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -627,6 +628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Health: {fileID: 3307949017038345633}
+  m_battleSceneManager: {fileID: 0}
 --- !u!114 &3307949017038345633
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,17 +10,26 @@ namespace GBE
 
         public BattleSceneManager manager;
 
-        public CardAction action;
+        public Card action;
+
+        private Battler m_battler;
 
         private void Start()
         {
             manager = FindObjectOfType<BattleSceneManager>();
             player = manager.playerInstance;
+
+            m_battler = GetComponent<Battler>();
+        }
+
+        private void OnDestroy()
+        {
+            manager.FoeInstances.Remove(m_battler);
         }
 
         public void TakeTurn()
         {
-            action.PerformAction(player);
+            action.PerformActions(player);
         }
     }
 }

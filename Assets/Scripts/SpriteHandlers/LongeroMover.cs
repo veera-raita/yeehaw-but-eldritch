@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class LongeroMover : MonoBehaviour
 {
-    private bool FloorCheck;
     private Rigidbody RB;
     private SpriteRenderer Spr;
     // Start is called before the first frame update
     void Start()
     {
-        FloorCheck = true;
         RB = GetComponent<Rigidbody>();
         Spr = GetComponent<SpriteRenderer>();
     }

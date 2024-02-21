@@ -11,7 +11,6 @@ namespace GBE
         public void SetupPool(CardPool t_profile)
         {
             m_cardPool = GetFullPool(t_profile.cards);
-
         }
 
         public List<Card> GetRandom(int t_amount)

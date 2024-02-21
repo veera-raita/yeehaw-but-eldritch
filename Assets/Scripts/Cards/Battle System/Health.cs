@@ -9,16 +9,12 @@ namespace GBE
         public int maxHealth;
         public int currentHealth;
 
-        public Battler battler;
         public HealthBar m_healthBar;
 
         private void Start()
         {
             currentHealth = maxHealth;
-
             m_healthBar.SetMaxHealth(maxHealth);
-
-            battler = GetComponent<Battler>();
         }
 
         private void Update()
@@ -41,7 +37,6 @@ namespace GBE
 
         public void HandleDeath()
         {
-            battler.m_battleSceneManager.enemyInstances.Remove(battler);
             Destroy(gameObject);
         }
     }
