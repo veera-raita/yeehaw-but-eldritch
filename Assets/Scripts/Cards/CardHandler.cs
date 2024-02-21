@@ -38,12 +38,15 @@ namespace GBE
             deckText.text = deck.Count.ToString();
             discardText.text = discard.Count.ToString();
 
-            //if (Input.GetKeyDown(KeyCode.P)) DrawFromDeck(1);
+            if (Input.GetKeyDown(KeyCode.P)) DrawFromDeck(1);
         }
 
         public void DrawFromDeck(int t_amountToDraw)
         {
             int t_cardsDrawn = 0;
+
+            if (deck.Count < t_amountToDraw)
+                t_amountToDraw = deck.Count;
 
             while (t_cardsDrawn < t_amountToDraw && hand.Count < 5)
             {
