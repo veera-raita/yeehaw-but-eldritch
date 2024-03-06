@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Longero
   m_EditorClassIdentifier: 
   id: f51241c7650976f47b9bc3ac333c3fee
-  cardName: 
+  cardName: Longero
   cardIcon: {fileID: 0}
-  m_actions:
-  - cardType: 0
-    amount: 15
+  cardClass: 0
+  m_actionsOnTarget:
+  - actionClass: 1
+    amount: 2
+    buffClass: 0
+  m_actionsOnSelf: []

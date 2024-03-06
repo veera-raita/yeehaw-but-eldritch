@@ -64,6 +64,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Health: {fileID: 7743612460544975645}
+  m_battleSceneManager: {fileID: 0}
+  m_isValid: 0
+  buffs: []
 --- !u!114 &7743612460544975645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +82,7 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   m_healthBar: {fileID: 617624405198388425}
+  m_battler: {fileID: 0}
 --- !u!61 &5323046819354950037
 BoxCollider2D:
   m_ObjectHideFlags: 0

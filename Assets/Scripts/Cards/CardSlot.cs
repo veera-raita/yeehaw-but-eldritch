@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace GBE
 {
@@ -11,9 +8,12 @@ namespace GBE
         public BattleSceneManager controller;
         public Card m_card;
 
+        public TextMeshProUGUI nameText;
+
         public void LoadCard(Card t_card)
         {
             m_card = t_card;
+            nameText.text = t_card.cardName;
         }
 
         public void SelectCard()

@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: Dagger
   m_EditorClassIdentifier: 
   id: 3783fa65ee81c6f458dc7eacb6bcbb5d
-  cardName: 
+  cardName: Dagger
   cardIcon: {fileID: 0}
-  m_actions:
-  - cardType: 0
-    amount: 5
+  cardClass: 0
+  m_actionsOnTarget:
+  - actionClass: 0
+    amount: 10
+    buffClass: 0
+  m_actionsOnSelf: []

@@ -10,22 +10,31 @@ namespace GBE
         public int currentHealth;
 
         public HealthBar m_healthBar;
+        public Battler m_battler;
+
+
+        private bool m_isVulnerable;
 
         private void Start()
         {
+            m_battler = GetComponent<Battler>();
+
             currentHealth = maxHealth;
             m_healthBar.SetMaxHealth(maxHealth);
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Q))
-                TakeDamage(Random.Range(5, 10));
-        }
-
         public void TakeDamage(int t_amount)
         {
-            currentHealth -= t_amount;
+            for (int i = 0; i < m_battler.buffs.Count; i++)
+            {
+                if (m_battler.buffs[i].buffClass == Buff.BuffClass.Resistance)
+                {
+                    m_isVulnerable = true;
+                }
+            }
+
+            currentHealth -= m_isVulnerable ? t_amount / 2 : t_amount;
+            m_isVulnerable = false;
 
             m_healthBar.SetHealth(currentHealth);
 

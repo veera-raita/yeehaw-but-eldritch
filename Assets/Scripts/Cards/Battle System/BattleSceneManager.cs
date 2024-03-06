@@ -87,6 +87,8 @@ namespace GBE
             yield return new WaitUntil(() => m_cardHandler.hand.Count == 0 || endTurn || FoeInstances.Count <= 0);
             yield return new WaitForSeconds(1f);
 
+            playerInstance.BuffAtTurnEnd();
+
             if (FoeInstances.Count <= 0)
             {
                 m_state = BattleState.Won;
@@ -113,6 +115,7 @@ namespace GBE
                 else
                 {
                     FoeInstances[i].GetComponent<Enemy>().TakeTurn();
+                    FoeInstances[i].BuffAtTurnEnd();
                     yield return new WaitForSeconds(2f);
                 }
             }

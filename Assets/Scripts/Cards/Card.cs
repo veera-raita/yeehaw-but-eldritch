@@ -5,28 +5,40 @@ using UnityEngine;
 namespace GBE
 {
     [CreateAssetMenu(menuName = "Card System/Card", fileName = "New Card")]
+
     public class Card : CardBase
     {
-        public CardAction[] m_actions;
-
-        public void PerformActions(Battler t_target)
+        public enum CardClass
         {
-            foreach (CardAction t_action in m_actions)
+            Attack,
+            Heal,
+            Buff,
+            Debuff
+        }
+
+        public CardClass cardClass;
+
+        public CardAction[] m_actionsOnTarget;
+        public CardAction[] m_actionsOnSelf;
+
+        public void Execute(Battler t_target)
+        {
+            foreach (CardAction t_action in m_actionsOnTarget)
             {
-                switch (t_action.cardType)
-                {
-                    case CardAction.CardType.Attack:
-                        t_action.Attack(t_target);
-                        break;
-                    case CardAction.CardType.Heal:
-                        break;
-                    case CardAction.CardType.Buff:
-                        break;
-                    case CardAction.CardType.Debuff:
-                        break;
-                    default:
-                        break;
-                }
+                t_action.PerformAction(t_target);
+            }
+        }
+
+        public void Execute(Battler t_target, Battler t_self)
+        {
+            foreach (CardAction t_action in m_actionsOnTarget)
+            {
+                t_action.PerformAction(t_target);
+            }
+
+            foreach (CardAction t_action in m_actionsOnSelf)
+            {
+                t_action.PerformAction(t_self);
             }
         }
     }
