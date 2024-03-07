@@ -32,7 +32,7 @@ namespace GBE
 
         public void Attack(Battler t_target)
         {
-            t_target.m_Health.TakeDamage(amount);
+            t_target.m_health.TakeDamage(amount);
         }
 
         public void AddBuff(Battler t_target, Buff.BuffClass t_class)

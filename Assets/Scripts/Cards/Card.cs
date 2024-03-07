@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace GBE
@@ -21,7 +19,8 @@ namespace GBE
         public CardAction[] m_actionsOnTarget;
         public CardAction[] m_actionsOnSelf;
 
-        public void Execute(Battler t_target)
+        // Run the actions on a specified target.
+        public void ExecuteActions(Battler t_target)
         {
             foreach (CardAction t_action in m_actionsOnTarget)
             {
@@ -29,7 +28,8 @@ namespace GBE
             }
         }
 
-        public void Execute(Battler t_target, Battler t_self)
+        // Perform actions two sets of actions if two targets are given.
+        public void ExecuteActions(Battler t_target, Battler t_self)
         {
             foreach (CardAction t_action in m_actionsOnTarget)
             {

@@ -6,17 +6,22 @@ namespace GBE
 {
     public class Battler : MonoBehaviour
     {
-        public Health m_Health;
-        public BattleSceneManager m_battleSceneManager;
-
         public bool m_isValid = false;
 
         public List<Buff> buffs = null;
 
+        private BattleSceneManager m_battleSceneManager;
+        public Health m_health;
+
         private void Start()
         {
             m_battleSceneManager = FindObjectOfType<BattleSceneManager>();
-            m_Health = GetComponent<Health>();
+
+            m_health = GetComponent<Health>();
+
+            m_health.OnDie += OnDie;
+            m_health.OnDamaged += OnDamaged;
+            
         }
 
         public void AddBuff(Buff.BuffClass t_class, int t_amount)
@@ -49,6 +54,22 @@ namespace GBE
             }
         }
 
+        public void OnDamaged(int t_amount, GameObject t_source)
+        {
+            // If health component invokes OnDamaged.
+            if (t_source)
+            {
+                // Do stuff like SFX or damage animation.
+            }
+        }
+
+        public void OnDie()
+        {
+            // Do death effects.
+
+            Destroy(gameObject);
+        }
+
         public void BuffAtTurnEnd()
         {
             for (int i = 0; i < buffs.Count; i++)
@@ -73,8 +94,6 @@ namespace GBE
         public void SetValidTarget()
         {
             m_isValid = true;
-
-            
         }
     }
 }

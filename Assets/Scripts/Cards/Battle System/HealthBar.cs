@@ -9,18 +9,18 @@ namespace GBE
         public TextMeshProUGUI healthText;
         public Slider healthFill;
 
-        public void SetMaxHealth(int t_amount)
-        {
-            healthFill.maxValue = t_amount;
-            healthFill.value = t_amount;
+        private Health m_health;
 
-            healthText.text = t_amount.ToString("D2") + " / " + t_amount.ToString("D2");
+        private void Start()
+        {
+            m_health = GetComponentInParent<Health>();
+            healthFill.maxValue = m_health.maxHealth;
         }
 
-        public void SetHealth(int t_amount)
+        private void Update()
         {
-            healthFill.value = t_amount;
-            healthText.text = t_amount.ToString("D2") + " / " + healthFill.maxValue;
+            healthFill.value = m_health.CurrentHealth;
+            healthText.text = m_health.CurrentHealth.ToString("D2") + " / " + healthFill.maxValue;
         }
     }
 }

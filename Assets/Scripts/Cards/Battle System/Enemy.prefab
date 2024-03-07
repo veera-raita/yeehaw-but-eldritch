@@ -558,7 +558,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7675989650367483710}
   - component: {fileID: 2486361049847668066}
-  - component: {fileID: 5327320473908860098}
   - component: {fileID: 5514698140419211971}
   - component: {fileID: 3307949017038345633}
   - component: {fileID: 4759228546838349949}
@@ -602,19 +601,6 @@ MonoBehaviour:
   player: {fileID: 0}
   manager: {fileID: 0}
   action: {fileID: 11400000, guid: f51241c7650976f47b9bc3ac333c3fee, type: 2}
---- !u!114 &5327320473908860098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8774231015405840609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2d965d100c52eb4ba27551299d1db49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 6
 --- !u!114 &5514698140419211971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,6 +615,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Health: {fileID: 3307949017038345633}
   m_battleSceneManager: {fileID: 0}
+  m_isValid: 0
+  buffs: []
 --- !u!114 &3307949017038345633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,8 +630,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 50
-  currentHealth: 0
   m_healthBar: {fileID: 7042824968716905016}
+  m_battler: {fileID: 0}
 --- !u!61 &4759228546838349949
 BoxCollider2D:
   m_ObjectHideFlags: 0

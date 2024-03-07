@@ -29,7 +29,7 @@ namespace GBE
 
         public void TakeTurn()
         {
-            action.Execute(player);
+            action.ExecuteActions(player);
         }
     }
 }

@@ -70,7 +70,7 @@ namespace GBE
             selectedCard = null;
             t_cardSlot.gameObject.SetActive(false);
 
-            t_cardSlot.m_card.Execute(m_battleSceneManager.target);
+            t_cardSlot.m_card.ExecuteActions(m_battleSceneManager.target);
 
             hand.Remove(t_cardSlot.m_card);
             Discard(t_cardSlot.m_card);
