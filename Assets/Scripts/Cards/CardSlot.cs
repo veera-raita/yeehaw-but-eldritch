@@ -5,31 +5,33 @@ namespace GBE
 {
     public class CardSlot : MonoBehaviour
     {
-        public BattleSceneManager controller;
-        public Card m_card;
+        public Card card;
 
         public TextMeshProUGUI nameText;
 
+        public BattleSceneManager m_battleSceneManager;
+
         public void LoadCard(Card t_card)
         {
-            m_card = t_card;
-            nameText.text = t_card.cardName;
+            // Assign all variables from the incoming card.
+            card = t_card;
+            nameText.text = card.cardName;
         }
 
         public void SelectCard()
         {
-            controller.m_cardHandler.selectedCard = this;
+            m_battleSceneManager.m_cardHandler.selectedCardSlot = this;
         }
 
         public void DeselectCard()
         {
-            controller.m_cardHandler.selectedCard = null;
+            m_battleSceneManager.m_cardHandler.selectedCardSlot = null;
         }
 
         public void HandleEndDrag()
         {
-            if (controller.target != null)
-                controller.m_cardHandler.PlayCard(this);
+            if (m_battleSceneManager.target != null)
+                m_battleSceneManager.m_cardHandler.SpendCard(this);
         }
     }
 }

@@ -5,19 +5,26 @@ namespace GBE
 {
     public class CardGenerator : MonoBehaviour
     {
+        #region Variables
         public CardPool m_CardPool;
         [SerializeField] private List<Card> m_cardPool;
+        #endregion
 
+        #region Custom Methods
         public void SetupPool(CardPool t_profile)
         {
             m_cardPool = GetFullPool(t_profile.cards);
         }
 
+        // This is the default method for generating random cards, when
+        // needed from a standard pool i.e. character-based moves.
         public List<Card> GetRandom(int t_amount)
         {
             return GetRandomFromPool(t_amount, m_cardPool);
         }
 
+        // Use this method if you need to generate cards from a specific
+        // card pool instead of the standard one.
         public List<Card> GetRandomFromPool(int t_amount, List<Card> t_cardPool)
         {
             List<Card> t_cards = new();
@@ -60,5 +67,6 @@ namespace GBE
 
             return t_list;
         }
+        #endregion
     }
 }

@@ -16,32 +16,32 @@ namespace GBE
 
     public class BattleSceneManager : MonoBehaviour
     {
+        #region Variables
         //
-
         public TextMeshProUGUI roundCount;
         public TextMeshProUGUI roundMsg;
 
+        [Space, Header("Round Settings")]
         public int roundCounter = 1;
+        public BattleState m_state;
+        public bool endTurn = false;
 
         [Space, Header("Player")]
         public Battler player;
         public Transform playerStation;
-
         public Battler playerInstance;
         public int actions = 6;
 
         [Space, Header("Enemies")]
-        public List<Battler> enemies;
+        public List<Battler> possibleEnemies;
         public Transform[] FoeStations;
         public List<Battler> FoeInstances;
 
-        public bool endTurn = false;
-
         public Battler target;
-        public BattleState m_state;
-
         public CardHandler m_cardHandler;
+        #endregion
 
+        #region Built-In Methods
         private void Start()
         {
             m_cardHandler = GetComponent<CardHandler>();
@@ -54,25 +54,22 @@ namespace GBE
         {
             roundCount.text = roundCounter.ToString();
         }
+        #endregion
 
+        #region Custom Methods
         public void BeginBattle()
         {
             playerInstance = Instantiate(player, playerStation.position, playerStation.rotation);
 
-            //
-            for (int i = 0; i < enemies.Count; i++)
+            // When beginning the battle, instantiate all the enemies into the scene.
+            for (int i = 0; i < possibleEnemies.Count; i++)
             {
-                Battler t_instance = Instantiate(enemies[i], FoeStations[i].position, FoeStations[i].rotation);
+                Battler t_instance = Instantiate(possibleEnemies[i], FoeStations[i].position, FoeStations[i].rotation);
                 FoeInstances.Add(t_instance);
             }
 
             m_state = BattleState.PlayerTurn;
             StartCoroutine(PlayerTurn());
-        }
-
-        public void EndTurn()
-        {
-            endTurn = true;
         }
 
         private IEnumerator PlayerTurn()
@@ -84,7 +81,7 @@ namespace GBE
 
             m_cardHandler.DrawFromDeck(5);
 
-            yield return new WaitUntil(() => m_cardHandler.hand.Count == 0 || endTurn || FoeInstances.Count <= 0);
+            yield return new WaitUntil(() => m_cardHandler.cardsInHand.Count == 0 || endTurn || FoeInstances.Count <= 0);
             yield return new WaitForSeconds(1f);
 
             playerInstance.BuffAtTurnEnd();
@@ -101,6 +98,11 @@ namespace GBE
             }
         }
 
+        public void EndTurn()
+        {
+            endTurn = true;
+        }
+
         private IEnumerator FoeTurn()
         {
             endTurn = false;
@@ -108,10 +110,16 @@ namespace GBE
 
             yield return new WaitForSeconds(1f);
 
-            //
+            // Loop through all enemy instances active in the scene and run their turn unless
+            // the player is missing, in which case skip straight to the battle end.
             for (int i = 0; i < FoeInstances.Count; i++)
             {
-                if (playerInstance == null) { break; }
+                if (playerInstance == null)
+                {
+                    m_state = BattleState.Lost;
+                    EndBattle();
+                    break;
+                }
                 else
                 {
                     FoeInstances[i].GetComponent<Enemy>().TakeTurn();
@@ -120,18 +128,10 @@ namespace GBE
                 }
             }
 
-            if (playerInstance == null)
-            {
-                m_state = BattleState.Lost;
-                EndBattle();
-            }
-            else
-            {
-                roundCounter++;
+            roundCounter++;
 
-                m_state = BattleState.PlayerTurn;
-                StartCoroutine(PlayerTurn());
-            }
+            m_state = BattleState.PlayerTurn;
+            StartCoroutine(PlayerTurn());
         }
 
         private void EndBattle()
@@ -150,7 +150,9 @@ namespace GBE
 
         private void HandleEndScreen()
         {
+            // When the battle results in victory, this function will be run.
             Debug.Log("end");
         }
+        #endregion
     }
 }

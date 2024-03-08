@@ -6,30 +6,31 @@ namespace GBE
 {
     public class Enemy : MonoBehaviour
     {
+        public Card enemyAction;
+
         public Battler player;
 
-        public BattleSceneManager manager;
-
-        public Card action;
-
+        private BattleSceneManager m_battleSceneManager;
         private Battler m_battler;
 
+        #region Built-In Methods
         private void Start()
         {
-            manager = FindObjectOfType<BattleSceneManager>();
-            player = manager.playerInstance;
+            m_battleSceneManager = FindObjectOfType<BattleSceneManager>();
+            player = m_battleSceneManager.playerInstance;
 
             m_battler = GetComponent<Battler>();
         }
 
         private void OnDestroy()
         {
-            manager.FoeInstances.Remove(m_battler);
+            m_battleSceneManager.FoeInstances.Remove(m_battler);
         }
+        #endregion
 
         public void TakeTurn()
         {
-            action.ExecuteActions(player);
+            enemyAction.ExecuteActions(player, m_battler);
         }
     }
 }

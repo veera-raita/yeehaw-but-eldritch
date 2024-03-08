@@ -8,6 +8,7 @@ namespace GBE
         public enum ActionClass
         {
             Damage,
+            Heal,
             Buff
         }
 
@@ -22,6 +23,9 @@ namespace GBE
                 case ActionClass.Damage:
                     Attack(t_target);
                     break;
+                case ActionClass.Heal:
+                    AddHealth(t_target);
+                    break;
                 case ActionClass.Buff:
                     AddBuff(t_target, buffClass);
                     break;
@@ -32,7 +36,12 @@ namespace GBE
 
         public void Attack(Battler t_target)
         {
-            t_target.m_health.TakeDamage(amount);
+            t_target.m_health.Damage(amount);
+        }
+
+        public void AddHealth(Battler t_target)
+        {
+            t_target.m_health.Heal(amount);
         }
 
         public void AddBuff(Battler t_target, Buff.BuffClass t_class)

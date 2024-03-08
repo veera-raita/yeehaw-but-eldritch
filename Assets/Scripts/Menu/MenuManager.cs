@@ -18,7 +18,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject SettingsScreen;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         StartButton.onClick.AddListener(() => ClickSound());
         StartButton.onClick.AddListener(() => StartGame ());
@@ -29,7 +29,6 @@ public class MenuManager : MonoBehaviour
         QuitButton.onClick.AddListener(() => ClickSound());
         QuitButton.onClick.AddListener(() => Die());
     }
-
 
     private void ClickSound()
     {

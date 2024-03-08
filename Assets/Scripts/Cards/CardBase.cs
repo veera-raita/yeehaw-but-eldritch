@@ -7,6 +7,8 @@ namespace GBE
 {
     public class CardBase : ScriptableObject
     {
+        // Use an id-based system to avoid referencing the wrong
+        // instance of the object.
         [SerializeField] private string id;
         public string ID { get { return id; } }
 
@@ -16,11 +18,13 @@ namespace GBE
         #if UNITY_EDITOR
         protected virtual void OnValidate()
         {
+            // This generates the random id for the card instance.
             string t_path = AssetDatabase.GetAssetPath(this);
             id = AssetDatabase.AssetPathToGUID(t_path);
         }
         #endif
 
+        // Call this function when generating a new instance of a card.
         public virtual CardBase GetDuplicate()
         {
             return Instantiate(this);

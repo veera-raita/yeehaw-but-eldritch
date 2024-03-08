@@ -6,11 +6,14 @@ namespace GBE
 {
     public class HealthBar : MonoBehaviour
     {
+        #region Variables
         public TextMeshProUGUI healthText;
         public Slider healthFill;
 
         private Health m_health;
+        #endregion
 
+        #region Built-In Methods
         private void Start()
         {
             m_health = GetComponentInParent<Health>();
@@ -22,5 +25,6 @@ namespace GBE
             healthFill.value = m_health.CurrentHealth;
             healthText.text = m_health.CurrentHealth.ToString("D2") + " / " + healthFill.maxValue;
         }
+        #endregion
     }
 }

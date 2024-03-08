@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +12,7 @@ namespace GBE
         private BattleSceneManager m_battleSceneManager;
         public Health m_health;
 
+        #region Built-In Methods
         private void Start()
         {
             m_battleSceneManager = FindObjectOfType<BattleSceneManager>();
@@ -20,9 +20,9 @@ namespace GBE
             m_health = GetComponent<Health>();
 
             m_health.OnDie += OnDie;
-            m_health.OnDamaged += OnDamaged;
-            
+            m_health.OnDamaged += OnDamaged;          
         }
+        #endregion
 
         public void AddBuff(Buff.BuffClass t_class, int t_amount)
         {
@@ -80,7 +80,7 @@ namespace GBE
 
         public void PointerEnterHandler()
         {
-            if (m_battleSceneManager.m_cardHandler.selectedCard != null)
+            if (m_battleSceneManager.m_cardHandler.selectedCardSlot != null)
             {
                 m_battleSceneManager.target = this;
             }

@@ -17,7 +17,10 @@ MonoBehaviour:
   cardIcon: {fileID: 0}
   cardClass: 0
   m_actionsOnTarget:
-  - actionClass: 1
-    amount: 2
+  - actionClass: 0
+    amount: 10
     buffClass: 0
-  m_actionsOnSelf: []
+  m_actionsOnSelf:
+  - actionClass: 1
+    amount: 3
+    buffClass: 0
