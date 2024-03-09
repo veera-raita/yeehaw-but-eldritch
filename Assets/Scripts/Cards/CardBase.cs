@@ -7,11 +7,20 @@ namespace GBE
 {
     public class CardBase : ScriptableObject
     {
+        // For determining which Battlers will be valid targets.
+        public enum CardClass
+        {
+            Attack,
+            Skill,
+            Power
+        }
+
         // Use an id-based system to avoid referencing the wrong
         // instance of the object.
         [SerializeField] private string id;
         public string ID { get { return id; } }
 
+        public CardClass cardClass;
         public string cardName;
         public Sprite cardIcon;
 

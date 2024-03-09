@@ -1,10 +1,16 @@
-using System.Collections.Generic;
+using UnityEngine;
 
 namespace GBE
 {
     [System.Serializable]
     public class CardAction
     {
+        public enum ActionTarget
+        {
+            Target,
+            Self
+        }
+
         public enum ActionClass
         {
             Damage,
@@ -12,8 +18,14 @@ namespace GBE
             Buff
         }
 
-        public ActionClass actionClass;
-        public int amount;
+        public ActionTarget target;
+        public bool targetAllEnemies;
+
+        [Space]
+        [SerializeField] private ActionClass actionClass;
+        [SerializeField] private int amount;
+
+        [Space]
         public Buff.BuffClass buffClass;
 
         public void PerformAction(Battler t_target)

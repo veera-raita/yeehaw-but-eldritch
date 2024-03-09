@@ -96,7 +96,6 @@ namespace GBE
                 // Same event thing as above with healing and damage.
                 m_isDead = true;
                 OnDie?.Invoke();
-                Destroy(gameObject);
             }
         }
         #endregion

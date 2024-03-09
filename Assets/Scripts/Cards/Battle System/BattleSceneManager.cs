@@ -35,7 +35,8 @@ namespace GBE
         [Space, Header("Enemies")]
         public List<Battler> possibleEnemies;
         public Transform[] FoeStations;
-        public List<Battler> FoeInstances;
+
+        private EnemyManager m_enemyManager;
 
         public Battler target;
         public CardHandler m_cardHandler;
@@ -45,6 +46,8 @@ namespace GBE
         private void Start()
         {
             m_cardHandler = GetComponent<CardHandler>();
+
+            m_enemyManager = GetComponent<EnemyManager>();
 
             m_state = BattleState.Start;
             BeginBattle();
@@ -64,8 +67,7 @@ namespace GBE
             // When beginning the battle, instantiate all the enemies into the scene.
             for (int i = 0; i < possibleEnemies.Count; i++)
             {
-                Battler t_instance = Instantiate(possibleEnemies[i], FoeStations[i].position, FoeStations[i].rotation);
-                FoeInstances.Add(t_instance);
+                Instantiate(possibleEnemies[i], FoeStations[i].position, FoeStations[i].rotation);
             }
 
             m_state = BattleState.PlayerTurn;
@@ -81,12 +83,12 @@ namespace GBE
 
             m_cardHandler.DrawFromDeck(5);
 
-            yield return new WaitUntil(() => m_cardHandler.cardsInHand.Count == 0 || endTurn || FoeInstances.Count <= 0);
+            yield return new WaitUntil(() => endTurn || m_enemyManager.EnemiesInScene.Count <= 0);
             yield return new WaitForSeconds(1f);
 
             playerInstance.BuffAtTurnEnd();
 
-            if (FoeInstances.Count <= 0)
+            if (m_enemyManager.EnemiesInScene.Count <= 0)
             {
                 m_state = BattleState.Won;
                 EndBattle();
@@ -112,18 +114,18 @@ namespace GBE
 
             // Loop through all enemy instances active in the scene and run their turn unless
             // the player is missing, in which case skip straight to the battle end.
-            for (int i = 0; i < FoeInstances.Count; i++)
+            for (int i = 0; i < m_enemyManager.EnemiesInScene.Count; i++)
             {
                 if (playerInstance == null)
                 {
                     m_state = BattleState.Lost;
                     EndBattle();
+
                     break;
                 }
                 else
                 {
-                    FoeInstances[i].GetComponent<Enemy>().TakeTurn();
-                    FoeInstances[i].BuffAtTurnEnd();
+                    m_enemyManager.EnemiesInScene[i].GetComponent<Enemy>().TakeTurn();
                     yield return new WaitForSeconds(2f);
                 }
             }

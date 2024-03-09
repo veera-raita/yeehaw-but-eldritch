@@ -1,37 +1,37 @@
-using TMPro;
-using UnityEngine;
+using System;
+using UnityEngine.EventSystems;
 
 namespace GBE
 {
-    public class CardSlot : MonoBehaviour
+    public class CardSlot : BaseCardSlot, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
     {
-        public Card card;
+        public event Action<BaseCardSlot> OnBeginDragEvent;
+        public event Action<BaseCardSlot> OnEndDragEvent;
+        public event Action<BaseCardSlot> OnDragEvent;
+        public event Action<BaseCardSlot> OnDropEvent;
 
-        public TextMeshProUGUI nameText;
+        private bool isDragging;
 
-        public BattleSceneManager m_battleSceneManager;
-
-        public void LoadCard(Card t_card)
+        public void OnBeginDrag(PointerEventData t_eventData)
         {
-            // Assign all variables from the incoming card.
-            card = t_card;
-            nameText.text = card.cardName;
+            isDragging = true;
+            OnBeginDragEvent?.Invoke(this);
         }
 
-        public void SelectCard()
+        public void OnEndDrag(PointerEventData t_eventData)
         {
-            m_battleSceneManager.m_cardHandler.selectedCardSlot = this;
+            isDragging = false;
+            OnEndDragEvent?.Invoke(this);
         }
 
-        public void DeselectCard()
+        public void OnDrag(PointerEventData t_eventData)
         {
-            m_battleSceneManager.m_cardHandler.selectedCardSlot = null;
+            OnDragEvent?.Invoke(this);
         }
 
-        public void HandleEndDrag()
+        public void OnDrop(PointerEventData t_eventData)
         {
-            if (m_battleSceneManager.target != null)
-                m_battleSceneManager.m_cardHandler.SpendCard(this);
+            OnDropEvent?.Invoke(this);
         }
     }
 }

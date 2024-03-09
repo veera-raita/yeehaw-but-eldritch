@@ -9,21 +9,19 @@ namespace GBE
 
         public List<Buff> buffs = null;
 
-        private BattleSceneManager m_battleSceneManager;
         public Health m_health;
 
         #region Built-In Methods
         private void Start()
         {
-            m_battleSceneManager = FindObjectOfType<BattleSceneManager>();
-
             m_health = GetComponent<Health>();
 
             m_health.OnDie += OnDie;
-            m_health.OnDamaged += OnDamaged;          
+            m_health.OnDamaged += OnDamaged;
         }
         #endregion
 
+        #region Custom Methods
         public void AddBuff(Buff.BuffClass t_class, int t_amount)
         {
             Buff t_instance = new();
@@ -67,7 +65,7 @@ namespace GBE
         {
             // Do death effects.
 
-            Destroy(gameObject);
+            Destroy(gameObject, 1f);
         }
 
         public void BuffAtTurnEnd()
@@ -78,22 +76,10 @@ namespace GBE
             }
         }
 
-        public void PointerEnterHandler()
-        {
-            if (m_battleSceneManager.m_cardHandler.selectedCardSlot != null)
-            {
-                m_battleSceneManager.target = this;
-            }
-        }
-
-        public void PointerExitHandler()
-        {
-            m_battleSceneManager.target = null;
-        }
-
         public void SetValidTarget()
         {
             m_isValid = true;
         }
+        #endregion
     }
 }

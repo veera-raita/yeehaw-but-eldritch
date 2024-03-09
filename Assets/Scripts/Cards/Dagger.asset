@@ -13,11 +13,17 @@ MonoBehaviour:
   m_Name: Dagger
   m_EditorClassIdentifier: 
   id: 3783fa65ee81c6f458dc7eacb6bcbb5d
+  cardClass: 0
   cardName: Dagger
   cardIcon: {fileID: 0}
-  cardClass: 0
-  m_actionsOnTarget:
-  - actionClass: 0
-    amount: 10
+  listOfActions:
+  - target: 0
+    targetAllEnemies: 0
+    actionClass: 0
+    amount: 0
     buffClass: 0
-  m_actionsOnSelf: []
+  - target: 0
+    targetAllEnemies: 0
+    actionClass: 0
+    amount: 0
+    buffClass: 0
