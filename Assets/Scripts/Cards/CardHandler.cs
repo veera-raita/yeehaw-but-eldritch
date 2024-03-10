@@ -11,6 +11,8 @@ namespace GBE
         public TextMeshProUGUI drawCountText;
         public TextMeshProUGUI discardCountText;
 
+        public TextMeshProUGUI actionCountText;
+
         // Cards are cycled between these three lists.
         [Space, Header("Card Lists")]
         public List<Card> cardDrawPile = new();
@@ -39,24 +41,11 @@ namespace GBE
         #endregion
 
         #region Custom Methods
-        private void SelectCard(BaseCardSlot t_cardSlot)
-        {
-            if (t_cardSlot.Card != null)
-            {
-                selectedCardSlot = t_cardSlot;
-            }
-        }
-
-        private void UnselectCard(BaseCardSlot t_cardSlot)
-        {
-            
-        }
-
         private void HandleBeginDrag(BaseCardSlot t_cardSlot)
         {
             if (t_cardSlot.Card != null)
             {
-                SelectCard(t_cardSlot);
+                selectedCardSlot = t_cardSlot;
             }
         }
 
@@ -93,8 +82,6 @@ namespace GBE
 
             // If desired draw count is larger than remaining draw pile,
             // set the size to the remaining cards to avoid errors.
-            //if (cardDrawPile.Count < t_amountToDraw)
-            //    t_amountToDraw = cardDrawPile.Count;
 
             // When the function is called, keep drawing cards until either
             // hand is full, or draw pile runs out of cards.
@@ -126,6 +113,9 @@ namespace GBE
         {
             // Call the actions for player-run cards here.
             t_cardSlot.Card.ExecuteActions(m_battleSceneManager.target, m_battleSceneManager.playerInstance);
+
+            m_battleSceneManager.actions -= t_cardSlot.Card.GetCardCost();
+            actionCountText.text = m_battleSceneManager.actions.ToString();
 
             // Reset the selected card and turn off the gameObject.
             selectedCardSlot = null;
