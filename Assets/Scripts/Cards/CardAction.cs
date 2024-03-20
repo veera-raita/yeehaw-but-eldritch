@@ -1,4 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace GBE
 {
@@ -15,7 +20,8 @@ namespace GBE
         {
             Damage,
             Heal,
-            Buff
+            Buff,
+            Restore
         }
 
         public ActionTarget target;
@@ -33,16 +39,32 @@ namespace GBE
         {
             // All the different actions should be under here. If there's more
             // complex functionality, it might be smort to make a new case.
+
+
             switch (actionClass)
             {
                 case ActionClass.Damage:
+                    if (targetAllEnemies)
+                    {
+                        GameObject[] t_targets = GameObject.FindGameObjectsWithTag("enemy");
+                        for (int i = 0; i < t_targets.Length; i++)
+                        {
+                            Attack(t_targets[i].GetComponent<Battler>());
+                        }
+                    }
+                    else
+                    {
                     Attack(t_target);
+                    }
                     break;
                 case ActionClass.Heal:
                     AddHealth(t_target);
                     break;
                 case ActionClass.Buff:
                     AddBuff(t_target, buffClass);
+                    break;
+                case ActionClass.Restore:
+                    Restore();
                     break;
                 default:
                     break;
@@ -62,6 +84,11 @@ namespace GBE
         public void AddBuff(Battler t_target, Buff.BuffClass t_class)
         {
             t_target.AddBuff(t_class, amount);
+        }
+
+        public void Restore()   //calls the RestoreAction method from the live BattleSceneManager, increasing current actions by amount
+        {
+            GameObject.FindGameObjectWithTag("BattleManager").GetComponent<BattleSceneManager>().RestoreAction(amount);
         }
         #endregion
     }

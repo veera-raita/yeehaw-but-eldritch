@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ffed5e3725c396144807583434b11013, type: 3}
-  m_Name: Dagger
+  m_Name: Crack Cocaine
   m_EditorClassIdentifier: 
-  id: 3783fa65ee81c6f458dc7eacb6bcbb5d
-  cardClass: 0
-  cardName: Dagger
+  id: 86159164aeff0434aa965cb6c50b8324
+  cardClass: 1
+  cardName: Crack Cocaine
   cardIcon: {fileID: 0}
-  cardCost: 1
+  cardCost: 0
   listOfActions:
-  - target: 0
-    targetAllEnemies: 1
-    actionClass: 0
-    amount: 7
+  - target: 1
+    targetAllEnemies: 0
+    actionClass: 3
+    amount: 1
     buffClass: 0

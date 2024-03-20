@@ -3867,7 +3867,7 @@ GameObject:
   - component: {fileID: 1692805779}
   m_Layer: 0
   m_Name: BattleSceneManager
-  m_TagString: Untagged
+  m_TagString: BattleManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3939,7 +3939,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3783fa65ee81c6f458dc7eacb6bcbb5d, type: 2}
   - {fileID: 11400000, guid: f51241c7650976f47b9bc3ac333c3fee, type: 2}
   - {fileID: 11400000, guid: 4ac8191e2c0099b42bd1a8a64b665a32, type: 2}
-  - {fileID: 11400000, guid: 3783fa65ee81c6f458dc7eacb6bcbb5d, type: 2}
+  - {fileID: 11400000, guid: 86159164aeff0434aa965cb6c50b8324, type: 2}
   - {fileID: 11400000, guid: f51241c7650976f47b9bc3ac333c3fee, type: 2}
   - {fileID: 11400000, guid: 4ac8191e2c0099b42bd1a8a64b665a32, type: 2}
   - {fileID: 11400000, guid: 3783fa65ee81c6f458dc7eacb6bcbb5d, type: 2}
@@ -3948,6 +3948,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3783fa65ee81c6f458dc7eacb6bcbb5d, type: 2}
   - {fileID: 11400000, guid: f51241c7650976f47b9bc3ac333c3fee, type: 2}
   - {fileID: 11400000, guid: 4ac8191e2c0099b42bd1a8a64b665a32, type: 2}
+  - {fileID: 11400000, guid: 86159164aeff0434aa965cb6c50b8324, type: 2}
+  - {fileID: 11400000, guid: 86159164aeff0434aa965cb6c50b8324, type: 2}
+  - {fileID: 11400000, guid: 86159164aeff0434aa965cb6c50b8324, type: 2}
+  - {fileID: 11400000, guid: 86159164aeff0434aa965cb6c50b8324, type: 2}
   cardsInHand: []
   discardPile: []
   selectedCardSlot: {fileID: 0}

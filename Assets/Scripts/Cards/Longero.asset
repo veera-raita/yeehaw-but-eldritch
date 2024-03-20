@@ -19,7 +19,7 @@ MonoBehaviour:
   cardCost: 1
   listOfActions:
   - target: 0
-    targetAllEnemies: 0
+    targetAllEnemies: 1
     actionClass: 0
     amount: 18
     buffClass: 0

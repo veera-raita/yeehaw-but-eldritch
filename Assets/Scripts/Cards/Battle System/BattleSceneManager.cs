@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -85,6 +86,11 @@ namespace GBE
 
             yield return new WaitForSeconds(1f);
 
+            if (CurrentActions < maximumActions)
+            {
+                RestoreAction(maximumActions);
+            }
+
             m_cardHandler.DrawFromDeck(5);
 
             yield return new WaitUntil(() => endTurn || m_enemyManager.EnemiesInScene.Count <= 0);
@@ -138,6 +144,16 @@ namespace GBE
 
             m_state = BattleState.PlayerTurn;
             StartCoroutine(PlayerTurn());
+        }
+
+        public void RestoreAction(int t_restore)    //increase current actions by t_restore, up to maximum actions
+        {
+            if (CurrentActions < maximumActions)
+            {
+                CurrentActions += t_restore;
+                CurrentActions = Math.Clamp(CurrentActions, 0, maximumActions);
+            }
+            m_cardHandler.actionCountText.text = CurrentActions.ToString() + "/" + maximumActions.ToString();
         }
 
         private void EndBattle()

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - BattleManager
   - floor
+  - Undefined
+  - enemy
   layers:
   - Default
   - TransparentFX
