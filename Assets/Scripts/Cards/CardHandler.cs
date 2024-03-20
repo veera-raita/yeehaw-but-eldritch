@@ -10,7 +10,6 @@ namespace GBE
         [Space, Header("Label References")]
         public TextMeshProUGUI drawCountText;
         public TextMeshProUGUI discardCountText;
-
         public TextMeshProUGUI actionCountText;
 
         // Cards are cycled between these three lists.
@@ -51,21 +50,24 @@ namespace GBE
 
         private void HandleEndDrag(BaseCardSlot t_cardSlot)
         {
-            switch (selectedCardSlot.Card.cardClass)
+            if (m_battleSceneManager.CurrentActions >= selectedCardSlot.Card.cardCost)
             {
-                case CardBase.CardClass.Attack:
-                    if (m_battleSceneManager.target != null)
-                    {
+                switch (selectedCardSlot.Card.cardClass)
+                {
+                    case CardBase.CardClass.Attack:
+                        if (m_battleSceneManager.target != null)
+                        {
+                            SpendCard(t_cardSlot);
+                        }
+                        break;
+                    case CardBase.CardClass.Skill:
+                    case CardBase.CardClass.Power:
                         SpendCard(t_cardSlot);
-                    }
-                    break;
-                case CardBase.CardClass.Skill:
-                case CardBase.CardClass.Power:
-                    SpendCard(t_cardSlot);
-                    break;
-                default:
-                    break;
-            }
+                        break;
+                    default:
+                        break;
+                }
+            }          
         }
 
         public void ShuffleCards()
@@ -114,8 +116,9 @@ namespace GBE
             // Call the actions for player-run cards here.
             t_cardSlot.Card.ExecuteActions(m_battleSceneManager.target, m_battleSceneManager.playerInstance);
 
-            m_battleSceneManager.actions -= t_cardSlot.Card.GetCardCost();
-            actionCountText.text = m_battleSceneManager.actions.ToString();
+            m_battleSceneManager.CurrentActions -= t_cardSlot.Card.GetCardCost();
+            actionCountText.text = m_battleSceneManager.CurrentActions.ToString()
+            + "/" + m_battleSceneManager.maximumActions.ToString();
 
             // Reset the selected card and turn off the gameObject.
             selectedCardSlot = null;

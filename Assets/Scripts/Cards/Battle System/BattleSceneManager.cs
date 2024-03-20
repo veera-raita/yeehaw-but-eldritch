@@ -18,8 +18,8 @@ namespace GBE
     {
         #region Variables
         //
-        public TextMeshProUGUI roundCount;
-        public TextMeshProUGUI roundMsg;
+        public TextMeshProUGUI roundCountText;
+        public TextMeshProUGUI roundMessageText;
 
         [Space, Header("Round Settings")]
         public int roundCounter = 1;
@@ -30,23 +30,24 @@ namespace GBE
         public Battler player;
         public Transform playerStation;
         public Battler playerInstance;
-        public int actions = 6;
+        [Space]
+        public int maximumActions = 3;
+        public int CurrentActions { get; set; }
 
         [Space, Header("Enemies")]
         public List<Battler> possibleEnemies;
         public Transform[] FoeStations;
 
-        private EnemyManager m_enemyManager;
-
         public Battler target;
-        public CardHandler m_cardHandler;
+        [HideInInspector] public CardHandler m_cardHandler;
+
+        private EnemyManager m_enemyManager;
         #endregion
 
         #region Built-In Methods
         private void Start()
         {
             m_cardHandler = GetComponent<CardHandler>();
-
             m_enemyManager = GetComponent<EnemyManager>();
 
             m_state = BattleState.Start;
@@ -55,7 +56,7 @@ namespace GBE
 
         private void Update()
         {
-            roundCount.text = roundCounter.ToString();
+            roundCountText.text = roundCounter.ToString();
         }
         #endregion
 
@@ -70,6 +71,9 @@ namespace GBE
                 Instantiate(possibleEnemies[i], FoeStations[i].position, FoeStations[i].rotation);
             }
 
+            CurrentActions = maximumActions;
+            m_cardHandler.actionCountText.text = CurrentActions.ToString() + "/" + maximumActions.ToString();
+
             m_state = BattleState.PlayerTurn;
             StartCoroutine(PlayerTurn());
         }
@@ -77,7 +81,7 @@ namespace GBE
         private IEnumerator PlayerTurn()
         {
             endTurn = false;
-            roundMsg.text = "Player Turn";
+            roundMessageText.text = "Player Turn";
 
             yield return new WaitForSeconds(1f);
 
@@ -108,7 +112,7 @@ namespace GBE
         private IEnumerator FoeTurn()
         {
             endTurn = false;
-            roundMsg.text = "Foe Turn";
+            roundMessageText.text = "Foe Turn";
 
             yield return new WaitForSeconds(1f);
 
@@ -140,13 +144,13 @@ namespace GBE
         {
             if (m_state == BattleState.Won)
             {
-                roundMsg.text = "Yippee!!";
+                roundMessageText.text = "Yippee!!";
                 HandleEndScreen();
             }
 
             if (m_state == BattleState.Lost)
             {
-                roundMsg.text = "Fuck you";
+                roundMessageText.text = "Fuck you";
             }
         }
 

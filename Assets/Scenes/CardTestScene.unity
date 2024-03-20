@@ -1005,7 +1005,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1169,7 +1169,7 @@ GameObject:
   - component: {fileID: 657331012}
   - component: {fileID: 657331013}
   m_Layer: 5
-  m_Name: AmountText
+  m_Name: ActionAmount_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1564,7 +1564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 738596646}
   m_Layer: 5
-  m_Name: Top
+  m_Name: RoundHeader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3642,7 +3642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 00
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3884,15 +3884,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e577e1e8935a2a34486a50c755b03660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roundCount: {fileID: 1939795654}
-  roundMsg: {fileID: 1794022170}
+  roundCountText: {fileID: 1939795654}
+  roundMessageText: {fileID: 1794022170}
   roundCounter: 1
   m_state: 0
   endTurn: 0
   player: {fileID: 433854721630873185, guid: 8778c66121fd9a6449865633dd043e32, type: 3}
   playerStation: {fileID: 701554552}
   playerInstance: {fileID: 0}
-  actions: 6
+  maximumActions: 3
   possibleEnemies:
   - {fileID: 5514698140419211971, guid: ee2d44c140d5040498418505a9564534, type: 3}
   - {fileID: 5514698140419211971, guid: ee2d44c140d5040498418505a9564534, type: 3}
@@ -4072,7 +4072,7 @@ GameObject:
   - component: {fileID: 1794022171}
   - component: {fileID: 1794022170}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RoundMessage_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4404,7 +4404,7 @@ GameObject:
   - component: {fileID: 1939795655}
   - component: {fileID: 1939795654}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RoundCount_Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

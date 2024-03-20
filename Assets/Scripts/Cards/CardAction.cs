@@ -28,8 +28,11 @@ namespace GBE
         [Space]
         public Buff.BuffClass buffClass;
 
+        #region Custom Methods
         public void PerformAction(Battler t_target)
         {
+            // All the different actions should be under here. If there's more
+            // complex functionality, it might be smort to make a new case.
             switch (actionClass)
             {
                 case ActionClass.Damage:
@@ -60,5 +63,6 @@ namespace GBE
         {
             t_target.AddBuff(t_class, amount);
         }
+        #endregion
     }
 }
