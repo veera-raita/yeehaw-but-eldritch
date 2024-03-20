@@ -611,9 +611,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyActions:
   - intentClass: 0
-    amount: 2
-    buffClass: 0
-    buffAmount: 0
+    amount: 10
+    buffClass: 1
+    buffAmount: 1
   turnActions: []
   shuffleActions: 1
   turnNumber: 0

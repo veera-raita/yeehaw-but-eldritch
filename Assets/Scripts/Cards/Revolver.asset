@@ -16,14 +16,10 @@ MonoBehaviour:
   cardClass: 0
   cardName: Revolver
   cardIcon: {fileID: 0}
+  cardCost: 1
   listOfActions:
   - target: 0
     targetAllEnemies: 0
     actionClass: 0
-    amount: 0
-    buffClass: 0
-  - target: 0
-    targetAllEnemies: 0
-    actionClass: 0
-    amount: 0
+    amount: 10
     buffClass: 0
