@@ -5,37 +5,35 @@ namespace GBE
 {
     public class CardGenerator : MonoBehaviour
     {
+        #region Variables
         public CardPool m_CardPool;
         [SerializeField] private List<Card> m_cardPool;
+        #endregion
 
-        public List<Card> card;
-
-        private void Update()
-        {
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                GetRandom(3);
-            }
-        }
-
+        #region Custom Methods
         public void SetupPool(CardPool t_profile)
         {
             m_cardPool = GetFullPool(t_profile.cards);
-
         }
 
+        // This is the default method for generating random cards, when
+        // needed from a standard pool i.e. character-based moves.
         public List<Card> GetRandom(int t_amount)
         {
             return GetRandomFromPool(t_amount, m_cardPool);
         }
 
+        // Use this method if you need to generate cards from a specific
+        // card pool instead of the standard one.
         public List<Card> GetRandomFromPool(int t_amount, List<Card> t_cardPool)
         {
             List<Card> t_cards = new();
 
+            // Loop through specified amount of times and return said
+            // amount of cards from the specified pool.
             for (int i = 0; i < t_amount; i++)
             {
-                Card t_card = m_cardPool[Random.Range(0, m_cardPool.Count)];
+                Card t_card = t_cardPool[Random.Range(0, m_cardPool.Count)];
                 t_cards.Add(t_card);
             }
 
@@ -49,6 +47,8 @@ namespace GBE
 
         public void RemoveFromPool(Card t_target)
         {
+            // Find a specific given card inside the specified card pool,
+            // then remove said card from the pool.
             Card t_card = m_cardPool.Find(t_instance => t_instance == t_target);
             if (t_card != null)
             {
@@ -58,6 +58,7 @@ namespace GBE
 
         private List<Card> GetFullPool(List<Card> t_cardPool)
         {
+            // Take all the instances inside a card pool and return them as a list.
             List<Card> t_list = new();
             foreach (Card t_card in t_cardPool)
             {
@@ -66,5 +67,6 @@ namespace GBE
 
             return t_list;
         }
+        #endregion
     }
 }

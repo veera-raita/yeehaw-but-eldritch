@@ -1,32 +1,33 @@
+using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 namespace GBE
 {
     [CreateAssetMenu(menuName = "Card System/Card", fileName = "New Card")]
-    public class Card : ScriptableObject
+    public class Card : CardBase
     {
-        public CardAction action;
+        public List<CardAction> listOfActions = new();
 
-        [SerializeField] private string id;
-        public string ID { get { return id; } }
-
-        public string cardName;
-        public Sprite cardIcon;
-
-        #if UNITY_EDITOR
-        protected virtual void OnValidate()
+        // Run the script for both action lists each time to make scripts shorter.
+        public void ExecuteActions(Battler t_target, Battler t_self)
         {
-            string t_path = AssetDatabase.GetAssetPath(this);
-            id = AssetDatabase.AssetPathToGUID(t_path);
-        }
-        #endif
+            if (listOfActions.Count > 0)
+            {
+                for (int i = 0; i < listOfActions.Count; i++)
+                {
+                    CardAction t_action = listOfActions[i];
 
-        public virtual Card GetDuplicate()
-        {
-            return Instantiate(this);
+                    if (t_action.target == CardAction.ActionTarget.Target)
+                    {
+                        t_action.PerformAction(t_target);
+                    }
+                    
+                    if (t_action.target == CardAction.ActionTarget.Self)
+                    {
+                        t_action.PerformAction(t_self);
+                    }
+                }
+            }           
         }
     }
 }

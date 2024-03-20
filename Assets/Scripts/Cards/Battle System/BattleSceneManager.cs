@@ -9,131 +9,156 @@ namespace GBE
     {
         Start,
         PlayerTurn,
-        EnemyTurn,
+        FoeTurn,
         Won,
         Lost
     }
 
     public class BattleSceneManager : MonoBehaviour
     {
-        public TextMeshProUGUI roundCount;
-        public TextMeshProUGUI roundMsg;
+        #region Variables
+        //
+        public TextMeshProUGUI roundCountText;
+        public TextMeshProUGUI roundMessageText;
+
+        [Space, Header("Round Settings")]
+        public int roundCounter = 1;
+        public BattleState m_state;
+        public bool endTurn = false;
 
         [Space, Header("Player")]
         public Battler player;
         public Transform playerStation;
-        public int actions = 6;
+        public Battler playerInstance;
+        [Space]
+        public int maximumActions = 3;
+        public int CurrentActions { get; set; }
 
         [Space, Header("Enemies")]
-        public Battler enemy;
-        public GameObject[] possibleEnemies;
-        public Transform enemyStation;
-
-
-
-        public TextMeshProUGUI deckText;
-        public TextMeshProUGUI discardText;
-
-        public List<Card> deck = new();
-        public List<Card> hand = new();
-        public List<Card> discard = new();
-
-        public CardSlot selectedCard;
-
-        public List<CardSlot> slots;
-        [SerializeField] protected Transform m_cardHolder;
-
-
+        public List<Battler> possibleEnemies;
+        public Transform[] FoeStations;
 
         public Battler target;
+        [HideInInspector] public CardHandler m_cardHandler;
 
-        public BattleState m_state;
+        private EnemyManager m_enemyManager;
+        #endregion
 
-        protected void OnValidate()
-        {
-            if (m_cardHolder != null)
-                m_cardHolder.GetComponentsInChildren(includeInactive: true, result: slots);
-        }
-
+        #region Built-In Methods
         private void Start()
         {
+            m_cardHandler = GetComponent<CardHandler>();
+            m_enemyManager = GetComponent<EnemyManager>();
+
             m_state = BattleState.Start;
-            BeginBattle(enemy);
+            BeginBattle();
         }
 
         private void Update()
         {
-            deckText.text = deck.Count.ToString();
-            discardText.text = discard.Count.ToString();
-
-            if (Input.GetKeyDown(KeyCode.P))
-                DrawFromDeck(5);
-
+            roundCountText.text = roundCounter.ToString();
         }
+        #endregion
 
-        public void BeginBattle(Battler t_prefabs)
+        #region Custom Methods
+        public void BeginBattle()
         {
-            Instantiate(t_prefabs, new Vector3(enemyStation.position.x, enemyStation.position.y + 3.125f, 
-                enemyStation.position.z), enemyStation.rotation);
+            playerInstance = Instantiate(player, playerStation.position, playerStation.rotation);
+
+            // When beginning the battle, instantiate all the enemies into the scene.
+            for (int i = 0; i < possibleEnemies.Count; i++)
+            {
+                Instantiate(possibleEnemies[i], FoeStations[i].position, FoeStations[i].rotation);
+            }
+
+            CurrentActions = maximumActions;
+            m_cardHandler.actionCountText.text = CurrentActions.ToString() + "/" + maximumActions.ToString();
 
             m_state = BattleState.PlayerTurn;
-            ChangeTurn(player);
+            StartCoroutine(PlayerTurn());
         }
 
-        public void ChangeTurn(Battler t_battler)
+        private IEnumerator PlayerTurn()
         {
-            if (m_state == BattleState.PlayerTurn)
-                roundMsg.text = "Your Turn";
+            endTurn = false;
+            roundMessageText.text = "Player Turn";
 
-            if (m_state == BattleState.EnemyTurn)
-                roundMsg.text = "Enemy Turn";
-        }
+            yield return new WaitForSeconds(1f);
 
+            m_cardHandler.DrawFromDeck(5);
 
+            yield return new WaitUntil(() => endTurn || m_enemyManager.EnemiesInScene.Count <= 0);
+            yield return new WaitForSeconds(1f);
 
+            playerInstance.BuffAtTurnEnd();
 
-        /*
-
-        **********************************************************************
-                         DECK INVESTIGATION DO NOT CROSS
-        **********************************************************************
-
-        */
-
-        private void DrawFromDeck(int t_amountToDraw)
-        {
-            int t_cardsDrawn = 0;
-
-            while (t_cardsDrawn < t_amountToDraw && hand.Count <= 5)
+            if (m_enemyManager.EnemiesInScene.Count <= 0)
             {
-                hand.Add(deck[0]);
-                DisplayCard(deck[0]);
-                deck.RemoveAt(0);
-                t_cardsDrawn++;
+                m_state = BattleState.Won;
+                EndBattle();
+            }
+            else
+            {
+                m_state = BattleState.FoeTurn;
+                StartCoroutine(FoeTurn());
             }
         }
 
-        public void DisplayCard(Card t_card)
+        public void EndTurn()
         {
-            CardSlot t_slot = slots[hand.Count - 1];
-            t_slot.m_card = t_card;
-            t_slot.gameObject.SetActive(true);
+            endTurn = true;
         }
 
-        public void PlayCard(CardSlot t_cardSlot)
+        private IEnumerator FoeTurn()
         {
-            selectedCard = null;
-            t_cardSlot.gameObject.SetActive(false);
+            endTurn = false;
+            roundMessageText.text = "Foe Turn";
 
-            t_cardSlot.m_card.action.PerformAction(target);
+            yield return new WaitForSeconds(1f);
 
-            hand.Remove(t_cardSlot.m_card);
-            Discard(t_cardSlot.m_card);
+            // Loop through all enemy instances active in the scene and run their turn unless
+            // the player is missing, in which case skip straight to the battle end.
+            for (int i = 0; i < m_enemyManager.EnemiesInScene.Count; i++)
+            {
+                if (playerInstance == null)
+                {
+                    m_state = BattleState.Lost;
+                    EndBattle();
+
+                    break;
+                }
+                else
+                {
+                    m_enemyManager.EnemiesInScene[i].GetComponent<Enemy>().TakeTurn();
+                    yield return new WaitForSeconds(2f);
+                }
+            }
+
+            roundCounter++;
+
+            m_state = BattleState.PlayerTurn;
+            StartCoroutine(PlayerTurn());
         }
 
-        private void Discard(Card t_card)
+        private void EndBattle()
         {
-            discard.Add(t_card);
+            if (m_state == BattleState.Won)
+            {
+                roundMessageText.text = "Yippee!!";
+                HandleEndScreen();
+            }
+
+            if (m_state == BattleState.Lost)
+            {
+                roundMessageText.text = "Fuck you";
+            }
         }
+
+        private void HandleEndScreen()
+        {
+            // When the battle results in victory, this function will be run.
+            Debug.Log("end");
+        }
+        #endregion
     }
 }

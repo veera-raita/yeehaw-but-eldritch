@@ -1,40 +1,37 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace GBE
 {
-    public class CardSlot : MonoBehaviour
+    public class CardSlot : BaseCardSlot, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler
     {
-        public BattleSceneManager controller;
+        public event Action<BaseCardSlot> OnBeginDragEvent;
+        public event Action<BaseCardSlot> OnEndDragEvent;
+        public event Action<BaseCardSlot> OnDragEvent;
+        public event Action<BaseCardSlot> OnDropEvent;
 
-        public Card m_card;
+        private bool isDragging;
 
-        private void Awake()
+        public void OnBeginDrag(PointerEventData t_eventData)
         {
-            
+            isDragging = true;
+            OnBeginDragEvent?.Invoke(this);
         }
 
-        public void LoadCard(Card t_card)
+        public void OnEndDrag(PointerEventData t_eventData)
         {
-            m_card = t_card;
+            isDragging = false;
+            OnEndDragEvent?.Invoke(this);
         }
 
-        public void SelectCard()
+        public void OnDrag(PointerEventData t_eventData)
         {
-            controller.selectedCard = this;
+            OnDragEvent?.Invoke(this);
         }
 
-        public void DeselectCard()
+        public void OnDrop(PointerEventData t_eventData)
         {
-            controller.selectedCard = null;
-        }
-
-        public void HandleEndDrag()
-        {
-            controller.PlayCard(this);
+            OnDropEvent?.Invoke(this);
         }
     }
 }
