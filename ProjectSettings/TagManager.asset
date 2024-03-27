@@ -8,6 +8,8 @@ TagManager:
   - floor
   - Undefined
   - enemy
+  - CardButton
+  - BattleMenu
   layers:
   - Default
   - TransparentFX

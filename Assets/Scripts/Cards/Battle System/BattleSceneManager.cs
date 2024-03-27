@@ -43,6 +43,9 @@ namespace GBE
         [HideInInspector] public CardHandler m_cardHandler;
 
         private EnemyManager m_enemyManager;
+
+        [Space, Header("Menu Management")]
+        [SerializeField] private GameObject CardScreen;
         #endregion
 
         #region Built-In Methods
@@ -173,6 +176,8 @@ namespace GBE
         private void HandleEndScreen()
         {
             // When the battle results in victory, this function will be run.
+            CardScreen.SetActive(true);
+            GameObject.FindGameObjectWithTag("BattleMenu").GetComponent<BattleWon>().InitEndScreen();
             Debug.Log("end");
         }
         #endregion
