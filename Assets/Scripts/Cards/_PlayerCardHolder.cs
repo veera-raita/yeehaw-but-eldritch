@@ -6,8 +6,8 @@ namespace GBE
 {
     public class _PlayerCardHolder : MonoBehaviour
     {
-        public List<CardBase> MasterList = new();
-        public List<CardBase> PlayerDeck = new();
+        public List<Card> MasterList = new();
+        public List<Card> PlayerDeck = new();
 
         //here go the methods for moving cards between these lists
     }

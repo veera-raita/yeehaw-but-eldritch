@@ -22,6 +22,7 @@ namespace GBE
 
         public CardClass cardClass;
         public string cardName;
+        public string cardDescription;
         public Sprite cardIcon;
         public int cardCost = 1;
 

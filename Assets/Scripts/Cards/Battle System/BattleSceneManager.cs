@@ -178,7 +178,6 @@ namespace GBE
             // When the battle results in victory, this function will be run.
             CardScreen.SetActive(true);
             GameObject.FindGameObjectWithTag("BattleMenu").GetComponent<BattleWon>().InitEndScreen();
-            Debug.Log("end");
         }
         #endregion
     }
